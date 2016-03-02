@@ -1,0 +1,192 @@
+<div style="display: block; overflow: hidden; margin-bottom: 25px;">
+	<div class="pull-right merchantSelect">
+    	<input ng-model="selectedMerchant" typeahead="merchant as merchant.name for merchant in merchants | filter:$viewValue" class="form-control" placeholder="Filter By Merchant" ng-click="showList()" typeahead-on-select='setMerchant($item, $model, $label)' />
+    </div>
+	<div class="pull-right dateRange" style="margin-right: 10px">
+		<a href="#" datepicker-popup="MM/dd/yyyy" datepicker-options="dateOptions" ng-model="date.start.val" is-open="date.start.opened" ng-click="date.start.opened=true" isdate >{{date.start.val | date:'MMM dd, yyyy'}}</a> thru
+		<a href="#" datepicker-popup="MM/dd/yyyy" datepicker-options="dateOptions" ng-model="date.end.val" is-open="date.end.opened" ng-click="date.end.opened=true" isdate >{{date.end.val | date:'MMM dd, yyyy'}}</a>
+	</div>
+    <h3 style="margin-top: 5px;">Chargeback Reporting</h3>
+</div>
+
+<div class="row">
+	<div class="col-sm-3">
+	
+		<div class="dash-stat dash-green">
+			<div class="stat-head">Amount Won Back</div>
+			<div class="stat" style="cursor: pointer;" ui-sref="chargebacks({status: 'Won'})">
+				{{data.Won.sum | currency:"$":0}}
+				<span ng-if="!data.Won.sum">None yet!</span>
+			</div>
+		</div>
+
+		<div class="dash-stat">
+			<div class="stat-head">Win Rate</div>
+			<div class="percentage" ng-if="data.hwl" percentage control="winloss"></div>
+			<div class="subtext" ng-if="data.hwl">{{data.winloss.won | number}} chargebacks won</div>
+			<div class="stat" style="padding-bottom: 40px;" ng-if="!data.hwl">No win's<br/>reported yet!</div>
+		</div>
+
+	</div>
+
+	<div class="col-sm-3">
+		
+		<select class="form-control" style="background-color: #F49245; color: white;" width="100%" ng-model="most" ng-options="item for item in items">
+	    </select>
+
+		<select class="form-control" style="background-color: #F49245; color: white;" width="100%" ng-model="filt" ng-options="filter for filter in filters">
+	     </select>
+	    
+	     <div class="dash-stat ng-hide" ng-show="render.midVol()">
+
+			<div class="stat" ng-show="data.midVol" style="padding-top: 10px;">
+				<div class="row" style="font-size: 12px;" ng-repeat="m in data.midVol">
+					<div class="col-xs-6 col-xs-offset-1">
+						<a href="chargebacks?mid={{m.mid}}">{{m.mid}}</a>
+					</div>
+					<div class="col-xs-5">{{m.amt | isoCurrency:currency:0}}</div>
+				</div>
+			</div>
+			<div class="stat" ng-if="!data.midVol">No MIDs yet!</div>
+		</div>
+
+		<div class="dash-stat ng-hide" ng-show="render.midCt()">	
+			<div class="stat" ng-show="data.midCt" style="padding-top: 10px;">
+				<div class="row" style="font-size: 12px;" ng-repeat="m in data.midCt">
+					<div class="col-xs-6 col-xs-offset-1">
+						<a href="chargebacks?mid={{m.mid}}">{{m.mid}}</a>
+					</div>
+					<div class="col-xs-5">{{m.count | number}}</div>
+				</div>
+			</div>
+			<div class="stat" ng-if="!data.midCt">No MIDs yet!</div>
+		</div>
+
+		<div class="dash-stat ng-hide" ng-show="render.fliersVol()">	
+			<div class="stat" ng-show="data.fliersVol" style="padding-top: 10px;">
+				<div class="row" style="font-size: 12px;" ng-repeat="m in data.fliersVol">
+					<div class="col-xs-6 col-xs-offset-1">
+						<a href="chargebacks?name={{m.name}}">{{m.name}}</a>
+					</div>
+					<div class="col-xs-5">{{m.amt | isoCurrency:currency:0 }}</div>
+				</div>
+			</div>
+			<div class="stat" ng-if="!data.fliersVol">No Frequent Fliers yet!</div>
+		</div>
+
+		<div class="dash-stat ng-hide" ng-show="render.fliersCt()">	
+			<div class="stat" ng-show="data.fliersCt" style="padding-top: 10px;">
+				<div class="row" style="font-size: 12px;" ng-repeat="m in data.fliersCt">
+					<div class="col-xs-6 col-xs-offset-1">
+						<a href="chargebacks?name={{m.name}}">{{m.name}}</a>
+					</div>
+					<div class="col-xs-5">{{m.count | number}}</div>
+				</div>
+			</div>
+			<div class="stat" ng-if="!data.fliersCt">No Frequent Fliers yet!</div>
+		</div>
+
+     	<div class="dash-stat ng-hide" ng-show="render.cvvVol()">
+			<div class="stat" ng-show="data.cvvVol" style="padding-top: 10px;">
+				<div class="row" style="font-size: 12px;" ng-repeat="m in data.cvvVol">
+					<div class="col-xs-6 col-xs-offset-1">
+						<a href="chargebacks?cvv={{m.cvv}}">{{m.cvv}}</a>
+					</div>
+				<div class="col-xs-5">{{m.amt | isoCurrency:currency:0 }}</div>
+			</div>
+			</div>
+			<div class="stat" ng-if="!data.cvvVol">No matches yet!</div>
+		</div>
+
+		<div class="dash-stat ng-hide" ng-show="render.cvvCt()">
+			<div class="stat" ng-show="data.cvvCt" style="padding-top: 10px;">
+				<div class="row" style="font-size: 12px;" ng-repeat="m in data.cvvCt">
+					<div class="col-xs-6 col-xs-offset-1">
+						<a href="chargebacks?cvv={{m.cvv}}">{{m.cvv}}</a>
+					</div>
+				<div class="col-xs-5">{{m.count | number}}</div>
+			</div>
+			</div>
+			<div class="stat" ng-if="!data.cvvCt">No matches yet!</div>
+		</div>
+     
+
+     	<div class="dash-stat ng-hide" ng-show= "render.avsVol()">
+			<div class="stat" ng-show="data.avsVol" style="padding-top: 10px;">
+				<div class="row" style="font-size: 12px;" ng-repeat="m in data.avsVol">
+					<div class="col-xs-6 col-xs-offset-1">
+						<a href="chargebacks?avs={{m.avs}}">{{m.avs}}</a>
+					</div>
+				<div class="col-xs-5">{{m.amt | isoCurrency:currency:0 }}</div>
+			</div>
+			</div>
+			<div class="stat" ng-if="!data.avsVol">No matches yet!</div>
+		</div>
+
+		<div class="dash-stat ng-hide" ng-show= "render.avsCt()">
+			<div class="stat" ng-show="data.avsCt" style="padding-top: 10px;">
+				<div class="row" style="font-size: 12px;" ng-repeat="m in data.avsCt">
+					<div class="col-xs-6 col-xs-offset-1">
+						<a href="chargebacks?avs={{m.avs}}">{{m.avs}}</a>
+					</div>
+				<div class="col-xs-5">{{m.count | number}}</div>
+			</div>
+			</div>
+			<div class="stat" ng-if="!data.avsCt">No matches yet!</div>
+		</div>
+
+		<div class="dash-stat dash-green">
+			<div class="stat-head" style="cursor: pointer;" tooltip-append-to-body="true" data-tooltip-html-unsafe="This is the percentage of your <br>chargebacks where the billing address <br> matches the shipping address."tooltip-placement="top">Bill/Ship Address Match</div>
+			<div class="stat">
+				{{ data.matchPercent }}
+				<span ng-if="!data.matchPercent">None yet!</span>
+			</div>
+		</div>
+
+		<!-- <div class="dash-stat">
+			<div class="stat-head">Win Rate</div>
+			<div class="percentage" ng-if="data.hwl" percentage control="winloss"></div>
+			<div class="subtext" ng-if="data.hwl">{{data.winloss.won | number}} chargebacks won</div>
+			<div class="stat" style="padding-bottom: 40px;" ng-if="!data.hwl">No win's<br/>reported yet!</div>
+		</div> -->
+		
+		<div class="dash-stat" ng-if="false">
+			<div class="stat-head">Billable Chargebacks</div>
+			<div class="stat" style="padding-bottom: 10px;">
+				<span ng-if="data.billing.count">{{data.billing.count | number}}</span>
+				<div style="font-size: 25px; line-height: 35px; padding-bottom: 10px;" ng-if="!data.billing.count">None in current<br/>billing period.</div>
+			</div>
+			<div class="subtext" style="color: #999;" ng-if="data.billing.count">
+				In current billing period<br/>
+				<a style="font-size: 14px;" href="/reporting/billing">View Billing History</a>
+			</div>
+		</div>
+	</div>
+		
+	<div class="col-sm-6">
+		
+
+		<div class="dash-stat dash-green">
+			<div class="stat-head stat-head-green">Chargeback Volume</div>
+			<div class="stat">
+				<div graph-bar control="graphBarHistory"></div>
+			</div>	
+		</div>
+
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="dash-stat">
+					<div class="stat-head">Total Count</div>
+					<div class="stat">{{data.total.count | number}}</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="dash-stat">
+					<div class="stat-head">Total Amount</div>
+					<div class="stat">{{data.total.sum | currency:"$":0}}</div>
+				</div>
+			</div>
+		</div>		
+	</div>
+</div>
+

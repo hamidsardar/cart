@@ -1,0 +1,113 @@
+
+
+<div class="row search" style="margin-bottom: 20px;">
+	<div class="col-md-6">
+		<h3 style="margin-top: 0px;">My Account</h3>
+		<h4 ng-if="currentUser.parent.name !=''">Sub account for {{ currentUser.parent.name }}</h4>
+	</div>
+	<div class="col-md-6">
+		<h4>{{ currentUser.username }}</h4>
+	</div>
+</div>
+
+<div class="row">
+	
+	<div class="col-sm-4 col-sm-push-8 form-sidebar">
+
+	</div>
+	<div class="col-sm-8 col-sm-pull-4" cg-busy="{promise:accountService,message:'Saving',backdrop:true}">
+
+		
+		<div class="alert alert-success alert-dismissable" ng-show="saved">
+			<button type="button" class="close" ng-click="saved=false" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<strong>Success!</strong> Your changes have been saved.
+		</div>
+		<div class="alert alert-danger alert-dismissable" ng-show="notSaved">
+			<button type="button" class="close" ng-click="notSaved=false" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<strong>Oops!</strong> Something went wrong. Please be sure your passwords match and try saving again.
+		</div>
+		
+
+		
+		<form name="acctForm" 
+				role="form" 
+				class="jgs-form" 
+				ng-submit="save(currentUser)" novalidate >
+		
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group" show-errors>
+						<label>Company</label>
+						<input name="name" type="text" required class="form-control" popover="{{errors.name}}" pop-placement="right" ng-model="currentUser.name" popover-append-to-body>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group" show-errors>
+						<label>Email</label>
+						<input name="email" type="email" required class="form-control" pop-show="{{errors.email}}" pop="{{errors.email}}" pop-placement="right" ng-model="currentUser.email" pop-append-to-body>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group" show-errors>
+						<label>Response Email</label>
+						<input name="send_to_email" type="email" class="form-control" pop-show="{{errors.send_to_email}}" pop="{{errors.send_to_email}}" pop-placement="right" ng-model="currentUser.send_to.email" pop-append-to-body>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group" show-errors>
+						<label>Response Fax</label>
+						<input name="send_to_fax" type="text" class="form-control" pop-show="{{errors.send_to_fax}}" pop="{{errors.send_to_fax}}" pop-placement="right" ng-model="currentUser.send_to.fax" pop-append-to-body>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group" show-errors>
+						<label>Password</label>
+						<input type="password"
+								   name="password"
+								   class="form-control"
+								   pop-show="{{errors.password}}"
+								   pop="{{errors.password}}"
+								   pop-placement="right"
+								   ng-model="currentUser.password" 
+								   ng-pattern="/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/"
+								   placeholder="Only enter to change"
+								   data-tooltip-html-unsafe="Your password must contain 7 characters<br>with a combination of letters and numbers"
+								   tooltip-placement="right"
+								   tooltip-append-to-body="true"
+									/>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group" show-errors>
+						<label class="control-label" for="reset-password2">Confirm New Password</label>
+						<input type="password" 
+						name="pass2"
+						placeholder="" 
+						class="form-control" 
+						pop-show="{{errors.password2}}" 
+						pop="{{errors.password2}}" 
+						pop-placement="right" 
+						ng-model="currentUser.password2" 
+						pop-append-to-body>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group btns">
+				<button type="submit" class="btn btn-success pull-right">Save</button>
+			</div>
+		
+		</form>
+	</div>
+
+</div>

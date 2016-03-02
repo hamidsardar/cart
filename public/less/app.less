@@ -1,0 +1,806 @@
+@import "../bower_components/bootstrap/less/bootstrap.less";
+@icon-font-path: "../bower_components/bootstrap/fonts/";
+// this path is replaced during grunt build.
+
+@import "core.less";
+@import "jgsform.less";		// general form styling
+@import "popovers.less";	// for form popover error handling
+@import "graphs.less";		// for d3 formatting
+@import "loading.less";		// loading widget
+@import "bootstrap-switch.less";		// loading widget
+
+
+@navbar-height:             		65px;
+@navbar-inverse-color:      		@gray-light;
+@navbar-inverse-bg:         		@jgsBlue;
+@navbar-inverse-border:     		darken(@navbar-inverse-bg, 10%);
+@navbar-inverse-link-color:         white;
+@navbar-inverse-link-hover-color:   #fff;
+@grid-float-breakpoint: 			@screen-md-min;
+
+
+@import "core.less";
+@import "jgsform.less";		// general form styling
+@import "popovers.less";	// for form popover error handling
+@import "loading.less";		// loading widget
+@import "dropzone.less";
+@import "graphs.less";		// for d3 formatting
+
+
+
+#pages {
+	margin-bottom: 150px;
+	margin-top: 110px;
+	&.admin {
+		margin-top: 40px;
+	}
+}
+
+
+.modal-backdrop {
+	height: 120%;
+	position: fixed;
+}
+
+
+footer {
+  margin-top: 20px;
+  color: #fff;
+  background-color: #2E2E2E;
+  .grey {
+	padding-top: 10px;
+	background-color: #424242;
+  }
+}
+
+.navbar-inverse {
+	.navbar-text {
+		color: @jgsRed;
+		font-weight: bold;
+	}
+}
+.navbar-brand {
+	
+    overflow: visible;
+    padding-top: 5px;
+    padding-bottom: 5px;
+	img {
+		height: 100%;
+	}
+}
+
+.nav-tabs {
+	li {
+		cursor: pointer;
+	}
+}
+.merchantSelect {
+	font-size: 16px;
+	select {
+		font-size: 14px;
+		width: auto;
+	}
+}
+
+
+@border-radius-large: 3px;
+.btn-cb-orange {
+	.button-variant(white, @jgsDarkOrange, @jgsDarkOrange);
+}
+
+.dropdown-menu {
+	-webkit-transition:all linear 0.25s;
+	transition:all linear 0.25s;
+	li {
+		div {
+			table {
+				&:focus {
+					outline: 0 none;
+				}
+			}
+		}
+	}
+	button {
+		outline: none;
+		border: 0px;
+	}
+	tbody {
+		height: 180px;
+	}
+	tbody button {
+		padding: 6px;
+	}
+	&.datepicker-mode-1, &.datepicker-mode-2 {
+		tbody button {
+			height: 65px;
+		}
+	}
+}
+
+// drag and drop zones in chargeback input pages.
+.ddzone {
+	background-color: @jgsBlue;
+	color: white;
+	padding: 10px;
+	font-size: 18px;
+	border-radius: 5px;
+	text-align: center;
+	line-height: 50px;
+	border: solid 4px @jgsBlue;
+	cursor: pointer;
+	&:hover, &.ddhover {
+		background-color: darken(@jgsBlue, 12%);
+	}
+	&.ddhover {
+		border: solid 4px green;
+	}
+	.glyphicon {
+		font-size: 60px;
+	}
+	.subtext {
+		font-size: 12px;
+		color: #ccc;
+	}
+}
+.download {
+	background: @jgsBeach;
+	padding: 5px;
+	height: 40px;
+	border-radius: 5px;
+	font-size: 16px;
+	.glyphicon {
+		padding-top: 5px;
+		font-size: 15px;
+	}
+}
+
+// class for formatting uploaded images in chargeback input forms
+.uploaded {
+	.img {
+		width: 200px;
+  		float: left;
+  		margin-right: 5px;
+		text-align: center;
+		margin-bottom: 10px;
+		margin-top	: 20px;
+		padding: 10px 0px;
+		position: relative;
+		img {
+			max-width: 200px;
+			padding-left: 0px;	// counter measure to remove width
+			margin: 0px auto;
+			
+		}
+		canvas {
+			width: auto;
+			padding-left: 24px;	// counter measure to remove width
+			margin: 0px auto;
+		}
+		
+		.remove {
+			display: none;
+			position: absolute;
+			cursor: pointer;
+			width: auto;
+			right: 0px;
+			font-size: 24px;
+			color: red;
+			margin-right: 10px;
+		}
+		&:hover {
+			.remove {
+				display: block;
+			}
+		}
+	}
+}
+.review-uploaded {
+	> div {
+		float: left; 
+		width: auto;
+	}
+	img {
+		border-radius: 5px;
+		max-width: 150px;
+		margin-right: 20px;
+	}
+	.missing-upload {
+		border-radius: 5px;
+		background-color: #efefef;
+		height: 150px;
+		width: 150px;
+		text-align: center;
+		margin: 0px auto;
+		padding: 10px;
+		padding-top: 15px;
+		font-size: 20px;
+		span {
+			color: @jgsRed;
+		}
+	}
+}
+.card-present {
+	margin-top: 40px;
+	.present, .notpresent {
+		cursor: pointer;
+		text-align: center;
+		color: @jgsBlue;
+		.glyphicon-credit-card {
+			font-size: 200px;
+		}
+		.glyphicon-ban-circle {
+			font-size: 200px;
+			color: #999;
+			opacity: .6
+		}
+		&:hover {
+			color: darken(@jgsBlue, 12%);
+		}
+	}	
+	.notpresent {
+		.glyphicon-credit-card {
+			position: absolute;
+		}
+	}
+}
+
+.dateRange {
+	font-size: 18px;
+	text-align: left;
+}
+
+
+// the chargeback list page, animations for paging, etc.
+.animated-grid {
+	.row {
+		&.ng-move,
+		&.ng-enter,
+		&.ng-leave {
+			-webkit-transition:all linear 0.25s;
+			transition:all linear 0.25s;
+		}
+
+		&.ng-leave.ng-leave-active,
+		&.ng-move,
+		&.ng-enter {
+			opacity:0;
+			max-height:0;
+		}
+
+		&.ng-leave,
+		&.ng-move.ng-move-active,
+		&.ng-enter.ng-enter-active {
+			opacity:1;
+			max-height:40px;
+		}
+	}
+	&.chargebacks {
+		.row {
+			border-bottom: solid 1px #efefef;
+			padding-top: 10px;
+			padding-bottom: 10px;
+			cursor: pointer;
+			&.head {
+				font-weight: bold;
+			}
+		}
+		.row:last-child {
+			border-bottom: none;
+		}
+	}
+	&.uploads {
+		.row {
+			&.ng-move,
+			&.ng-enter,
+			&.ng-leave {
+				-webkit-transition:all linear 1.5s;
+				transition:all linear 1.5s;
+			}
+		}
+	}
+}
+
+.status-colors {
+	cursor: pointer;
+	.New {
+		color: @jgsDarkOrange;
+	}
+	.In-Progress {
+		color: @jgsBlue;
+	}
+	.Won {
+		color: @jgsGreen;
+		font-weight: bold;
+	}
+	.Sent {
+		color: @jgsBlue;
+	}
+	.Lost {
+		color: @jgsRed;
+	}
+       .Accept {
+                color: @jgsRed;
+        }
+}
+
+// chargeback required fields
+.required label:after {
+	content: "*";
+	font-weight: bold;
+	color: red; 
+}
+
+// chargeback datepicker input box
+.dp {
+ 	border-top: none;	
+ 	border-bottom: none;
+ 	border-left: none;
+ 	box-shadow: none;
+}
+
+// working chargebacks...
+
+// cbFormRow is the right column in desktop view, or top in mobile.
+.cbFormRow {
+
+	.step-circles {
+		margin-top: 30px;
+		> div {
+			text-align: center;
+			font-size:12px;
+			cursor: pointer;
+			a:hover {
+				text-decoration:none;
+			}
+
+
+			/* we will style the span as the circled number */
+			span {
+				background: @jgsBlue;
+				display:block;
+				height:30px;
+				margin:0 auto 5px;
+				padding-top:5px;
+				width:30px; 
+		    	border-radius:50%;
+		    	color: white;
+		    }
+
+		    &.active {
+				cursor: auto;
+				span {
+					background: #080808;
+				}
+
+			}
+
+		    &.disabled {
+		    	cursor: auto;
+		    	a {
+		    		color: #999;
+		    		&:hover {
+		    			color: #999;
+		    		}
+		    	}
+		    	span {
+					background:#999;
+				}
+		    }
+
+			/* active buttons turn light green-blue*/
+			a.active span { background: @jgsBlue; }
+		}
+	}
+
+}
+
+// reason code graph buttons
+.btn-group {
+	.btn-custom {
+    	background-color: @jgsDarkOrange;
+    	border: 2px solid darken(@jgsDarkOrange, 10%);
+    	color: white;
+ 	}
+	.btn-active {
+		background-color: #B84D4D;
+    	border: 2px solid darken(#B84D4D, 10%);
+    	color: white;
+	}
+}
+
+.reportingRow {
+	margin: 0;
+	width: 100%;
+}
+
+// large circles in dash
+
+.dash-stat {
+	width: 100%;
+	font-size: 30px;
+	text-align: center;
+	background-color: #efefef;
+	margin-bottom: 30px;
+	.border-bottom-radius(3px);
+	.stat-head {
+		.border-top-radius(3px);
+		background-color: @jgsDarkBlue;
+		color: white;
+		font-size: 18px;
+		text-align: center;
+		margin-bottom: 15px;
+		padding: 10px 0px;
+	}
+	&.dash-green {
+		background-color: @jgsGreen;
+		.border-top-radius(3px);
+		color: white;
+	}
+	&.dash-darkblue {
+		background-color: darken(@jgsBlue, 16%);
+		.border-top-radius(3px);
+		color: white;
+	}
+	.stat-head-red {
+		background-color: #B84D4D;
+		font-size: 24px;
+	}
+	.stat-head-green {
+		background-color: @jgsGreen;
+	}
+	.stat {
+		padding-bottom: 20px;
+		width: 100%;
+		.row {
+			font-size: 16px;
+			text-align: left;
+			margin-bottom: 8px;
+			.glyphicon {
+				width: 25px;
+			}
+		}
+		.highlight {
+			color: @jgsBrightOrange;
+		}
+	}
+	.video {
+		width: 100%;
+		height: 250px; 
+		border-radius: 3px;
+		background-color: @jgsBlue;
+		color: white;
+		font-size: 30px;
+		padding-top: 60px;
+		cursor: pointer;
+	}
+	&.clickable {
+		cursor: pointer;
+	}
+	.subtext {
+		font-size: 20px;
+		color: @jgsGreen;
+		padding-bottom: 20px;
+	}
+}
+#reporting-views {
+	.dash-stat {
+		.subtext {
+			font-size: 15px;
+		}
+	}
+}
+.dashboard-process {
+	
+	.num { 
+		background:#080808;
+		display:inline-block;
+		height:30px;
+		margin:0 auto 0px;
+
+		font-size:20px;
+		text-align:center; 
+		margin-right: 10px;
+		text-transform:uppercase;
+		border-radius:50%;
+		width: 30px;
+		color: white;
+		padding-top: 3px;
+	}
+}
+
+
+// final step in the chargeback process, review page
+.review-block {
+	margin-top: 100px;
+	font-size: 16px;
+	&.first-block {
+		margin-top: 0px;
+	}
+	h4 {
+		font-weight: bold;
+		border-bottom: solid 1px @jgsTeal;
+		padding-bottom: 5px;
+	}
+	> div:first-child {
+		 margin-top: 20px;
+	}
+	.col-sm-2 {
+		 text-align: center;
+		 span {
+		 	color: @jgsBeach;
+		 	font-size: 80px;
+		 }
+	}
+
+	img {
+		width: 100%;
+		border: solid 1px #efefef;
+		border-radius: 5px;
+		margin-bottom: 20px;
+	}
+}
+
+
+/* style.css */
+/* ANIMATION STYLINGS
+============================================================================= */
+#cbForm {
+	position:relative;
+	min-height:300px;
+	overflow:hidden;
+}
+#form-views {
+	width: auto;
+	
+	&.ng-move,
+	&.ng-enter,
+	&.ng-leave {
+		-webkit-transition:all linear 0.25s;
+		transition:all linear 0.25s;
+	}
+
+	&.ng-leave.ng-leave-active,
+	&.ng-move,
+	&.ng-enter {
+		opacity:0;
+	}
+
+	&.ng-leave,
+	&.ng-move.ng-move-active,
+	&.ng-enter.ng-enter-active {
+		opacity:1;
+	}
+}
+
+.imported-col {
+	margin-top: 30px;
+
+	.imported {
+		background-color: #efefef;
+		color: black;
+		padding-bottom: 10px;
+		.border-top-radius(3px);
+		.border-bottom-radius(3px);
+		.side-cbinfo-head {
+			font-weight: bold;
+			color: white;
+			padding: 8px;
+			.border-top-radius(3px);
+			font-size: 16px;
+			margin-bottom: 10px;
+			text-align: center;
+			background-color: @jgsDarkBlue;
+		}
+		.side-cbinfo-desc {
+			padding: 10px 15px 20px;
+			font-size: 12px;
+			color: #D7783C;
+		}
+		.row {
+			margin-bottom: 5px;
+		}
+	}
+	
+}
+
+
+/* Hide for mobile, show later */
+.sidebar {
+	display: none;
+	/* Sidebar navigation */
+	.nav-sidebar {
+		margin-right: -21px; /* 20px padding + 1px border */
+		margin-bottom: 20px;
+		margin-left: -20px;
+	}
+	.nav-sidebar > li > a {
+		padding-right: 20px;
+		padding-left: 20px;
+	}
+	.nav-sidebar > .active > a,
+	.nav-sidebar > .active > a:hover,
+	.nav-sidebar > .active > a:focus {
+		color: #fff;
+		background-color: @jgsBlue;
+	}
+}
+.main {
+	
+}
+
+
+/* small devices (tablets, 768px and up) */
+@media (min-width: @screen-sm-min) {
+
+	.sidebar {
+		position: fixed;
+		top: 66px;
+		bottom: 0;
+		left: 0;
+		z-index: 1000;
+		display: inline-table;
+		padding: 20px;
+		overflow-x: hidden;
+		overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+		background-color: #f5f5f5;
+		border-right: 1px solid #eee;
+	}
+	.row {
+		.main {
+			margin-left: 26%;
+		}
+	}
+	.reportingRow {
+		margin-left: -15px;
+		margin-right: -15px;
+	}
+
+}
+
+
+@media (min-width: @screen-md-min) {
+
+	.sidebar {
+		position: fixed;
+		top: 66px;
+		bottom: 0;
+		left: 0;
+		z-index: 1000;
+		display: inline-table;
+		padding: 20px;
+		overflow-x: hidden;
+		overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+		background-color: #f5f5f5;
+		border-right: 1px solid #eee;
+	}
+	.main {
+		padding-right: 40px;
+    	padding-left: 40px;
+	}
+	.row {
+		.main {
+			margin-left: 16.66666667%
+		}
+	}
+	.dateRange {
+		text-align: right;
+	}
+	.cbFormRow {
+		margin-top: 0px;
+		margin-bottom: 50px;
+		.step-circles {
+			width: 340px;
+			margin-top: 0px;
+			position: fixed;
+			a {
+				margin-bottom: 10px;
+			}
+		}
+	}
+
+	.imported-col {
+		margin-top: 20px;
+		position: fixed;
+		width: 320px;
+	}
+	
+
+
+	
+}
+
+@media (min-width: @screen-lg-min) {
+
+	.dateRange {
+		font-size: 24px;
+	}
+
+	.cbFormRow {
+		.step-circles {
+			width: 400px;
+		}
+	}
+
+	.imported-col {
+		width: 385px;
+	}
+	
+
+}
+
+@media screen and (max-height: 745px) {
+	.cbFormRow .step-circles {
+		position: static;
+	}
+	.imported-col {
+		position: static;
+	}	
+}
+
+//import csv
+
+div.import {
+  width: 300px;
+}
+
+div.import>div {
+  margin: 5px 0px;
+}
+
+div.import>div>div.label {
+  display: inline-block;
+  width: 30%;
+  text-align: left;
+  color: black;
+  font-family: 'Verdana';
+  font-size: 14px;
+}
+
+div.import>div>input {
+  display: inline-block;
+  margin: 5px 5px;
+}
+
+div.import>div>input[type="text"] {
+  font-size: 18px;
+  color: #d6492f;
+  padding: 2px 5px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 2px;
+  width: 30px;
+}
+
+div.import>div>input[type="file"] {
+}
+
+div.import>div>input[type="file"] {
+  color: transparent;
+}
+
+div.import>div>input[type="file"]::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+div.import>div>input[type="file"]::before {
+  content: 'Select File';
+  display: inline-block;
+  background-image: linear-gradient(to top, #f9f9f9 0px, #f9f9f9 50%, #e3e3e3 50%, #e3e3e3 100% );
+  color: #444;
+  border: 1px solid #999;
+  border-radius: 3px;
+  padding: 5px 8px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  text-shadow: 1px 1px #fff;
+  font-weight: 700;
+  font-size: 14px;
+}
+div.import>div>input[type="file"]:hover::before {
+  border-color: black;
+}
+div.import>div>input[type="file"]:active::before {
+  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+}

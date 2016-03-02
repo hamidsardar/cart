@@ -1,0 +1,130 @@
+
+// http://www.colourlovers.com/palette/92095/Giant_Goldfish
+@jgsBrightOrange: #FA6900;
+@jgsDarkOrange: #F38630;
+@jgsBeach: #E0E4CC;
+@jgsTeal: #A7DBD8;
+@jgsBlue: #0d94c1;
+@jgsRed: #9d352f;
+
+@jgsDarkBlue: #373C47;
+@jgsGreen: #6CBAA5;
+
+
+@brand-primary: @jgsBlue;
+@brand-success: @jgsDarkOrange;
+@brand-info: @jgsTeal;
+@brand-warning: @jgsBeach;
+@brand-danger: #d9534f;
+@body-bg: #fff;
+
+@btn-primary-color: #333;
+@btn-info-color: @jgsBrightOrange;
+@btn-warning-color: @jgsDarkOrange;
+
+// jgsform
+@jgsFormText: #dedede;
+@jgsFormErrorBack: #fbddd5;
+@jgsFormErrorPlace: #edb1a3;
+@jgsFormErrorLabel: #eb5635;
+
+// popovers
+@jgsPopColor: @jgsBrightOrange;
+
+// dropzone
+@jgsDropZoneBack: @jgsBlue;
+@jgsDropZoneText: @jgsBeach;
+@jgsDropZoneSubText: @jgsBeach;
+
+
+
+body {
+	-webkit-font-smoothing: antialiased;
+	-moz-font-smoothing: antialiased;
+	font-smoothing: antialiased;
+}
+
+
+@font-family-sans-serif: 'Open Sans', sans-serif; 	// override bootstrap font family
+
+
+
+.search, .filter {
+	.input-group-addon {
+		background-color: #fcfcfc;
+		border-color: #d2d2d2;
+	}
+	input {
+		border-color: #d2d2d2;
+	}
+	.glyphicon-plus-sign {
+		color: @jgsDarkOrange;
+	}
+}
+
+textarea {
+	// box-sizing properties below fix 100% with of inputs with padding problem
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+
+
+.placeholder {
+	.center-block();
+	.none {
+		font-size: 20px;
+		text-align: center;
+		padding-top: 80px;
+	}
+}
+
+
+/*Fly-down Notifications*/
+.notification {
+	position:fixed;
+	left: 50%; 
+	top: 0;
+	width: 300px;
+	margin-left: -150px;
+	z-index:30000;
+
+	border-radius: 10px;
+
+	background: #FFF;
+	border: 6px solid #d4d4d4;
+	padding: 15px 25px;
+
+	cursor: pointer;
+
+	&.type_error {
+		h3 {
+			background: url(../images/error_icon.png) no-repeat 95px 0;
+			height: 30px;
+			line-height: 30px;
+		}
+	}
+
+	h3 {
+		text-align: center;
+		font-size: 16px;
+		padding: 0 0 10px;
+		margin: 0;
+		text-transform: uppercase;
+	}
+	p {
+		text-align: center;
+		padding: 0;
+		margin: 0;
+	}
+}
+
+
+.navbar-nav > li {
+	&.sm-menu-items {
+		display: none;
+	}
+}
+
+

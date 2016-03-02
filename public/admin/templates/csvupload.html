@@ -1,0 +1,51 @@
+
+
+<div class="row search" style="margin-bottom: 20px;">
+	<div class="col-md-12">
+		<h2 style="margin-top: 0px;">Upload CSV File</h2>
+	</div>
+</div>
+
+<div class="row">
+	
+	<div class="col-sm-4 col-sm-push-8 form-sidebar">
+	Use this to upload files to CART
+	</div>
+	<div class="col-sm-8 col-sm-pull-4" >
+
+		<input ng-model="user"
+			   typeahead="user as user.name + ' : ' + user.username for user in service.getUsers($viewValue)"
+			   typeahead-loading="loadingUsers"
+			   class="form-control"
+			   placeholder="Select a User to associated uploaded chargebacks" />
+		<i ng-show="loadingUsers" class="glyphicon glyphicon-refresh"></i>
+
+		<div ng-if="user._id">
+			<ng-csv-import class="import" content="csv.content" header="true" separator="','" result="csv.result"></ng-csv-import>
+
+			<div class="row" style="margin-top: 20px;" ng-if="fields.length > 0">
+				<div class="col-md-12"><h4>CSV Field Mapper</h4></div>
+			</div>
+			<table class="table table-bordered" ng-if="fields.length > 0">
+				<tr>
+					<td><b>Uploaded Field Name</b></td>
+					<td><b>Example Data</b></td>
+					<td><b>Mapped Field</b></td>
+				</tr>
+				<tr ng-repeat="f in fields">
+					<td>{{f.field}}</td>
+					<td>{{f.example}}</td>
+					<td>
+						<input ng-model="map[f.field]" typeahead="cbField for cbField in cbFields | filter:$viewValue | limitTo:8" class="form-control" placeholder="Find Corresponding Field" />
+					</td>
+				</tr>
+			</table>
+
+			<div class="pull-right" ng-if="fields.length > 0">
+				<button type="submit" class="btn btn-success pull-right" ng-click="save()">Save</button>
+			</div>
+		</div>
+
+    </div>
+</div>
+

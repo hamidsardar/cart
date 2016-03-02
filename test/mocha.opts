@@ -1,0 +1,5 @@
+--bail
+--ui bdd
+--slow 1000ms
+--timeout 8000ms
+--reporter spec

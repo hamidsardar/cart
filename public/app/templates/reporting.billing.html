@@ -1,0 +1,30 @@
+<div class="row search" style="margin-bottom: 40px;">
+	<div class="col-md-12">
+		<h3 style="margin-top: 0px;">Billing History</h3>
+	</div>
+</div>
+
+
+<div class="animated-grid">
+	<div class="row head">
+		<div class="col-sm-4">Month</div>
+		<div class="col-sm-4">Period</div>
+		<div class="col-sm-4">Billable Chargeback Count</div>
+	</div>
+
+	<div class="row" ng-repeat="row in billing">
+		<div class="col-sm-4">{{row.month}}, {{row.year}}</div>
+		<div class="col-sm-4">
+			<span ng-if="row.half == 'a'">(1st - 15th)</span>
+			<span ng-if="row.half == 'b'">(16th - end of month)</span>
+		</div>
+		<div class="col-sm-4">{{row.count | number}}</div>
+	</div>
+	
+	<div class="row" ng-if="loaded && billing.length == 0">
+		<div class="col-sm-12"><h3>No billing data.</h3></div>
+	</div>	
+	<div class="row" ng-if="!loaded">
+		<div class="col-sm-12"><h3 style="color: #999;">Loading Chargebacks...</h3></div>
+	</div>	
+</div>

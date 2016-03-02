@@ -1,0 +1,291 @@
+
+<div class="row cbFormRow">
+	<div class="col-sm-8">
+		<h2 style="margin-top: 20px;">
+			New Chargeback
+		</h2>
+	</div>
+	<div class="col-sm-4">
+		<!-- empty -->
+	</div>
+</div>
+
+<form name="cbNewForm" 
+	role="form" 
+	ng-model-options="{ allowInvalid: true }"
+	ng-submit="methods.saveNew()" novalidate >
+	
+	<div class="row">
+		<div class="col-sm-4 col-sm-push-8 form-sidebar">
+			<!-- instructions here -->
+			<div class="side-main-head">ADD NEW CHARGEBACK MANUALLY</div>
+			
+			<p>You can find this information in your merchant service providers online portal.</p>
+
+			<div style="margin-top: 20px;">You'll be able to enter additional chargeback information in the subsequent screens.</div>
+
+			
+		</div>
+		<div class="col-sm-8 col-sm-pull-4">
+
+			<div class="jgs-form" cg-busy="{promise:newService,message:'Saving',backdrop:true}">
+
+				<div class="row bt">
+					<div class="col-md-4">
+						<div class="form-group" show-errors>
+							<label>Case Number </label>
+							<input name="CaseNumber" 
+								type="text" 
+								class="form-control" 
+								pop-show="{{errors.CaseNumber}}" 
+								pop="{{errors.CaseNumber}}" 
+								pop-placement="right" 
+								ng-model="data.portal_data.CaseNumber" 
+								placeholder="">
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group" show-errors>
+							<label>Reference Number</label>
+							<input name="RefNumber" 
+								type="text" 
+								class="form-control" 
+								pop-show="{{errors.RefNumber}}" 
+								pop="{{errors.RefNumber}}" 
+								pop-placement="right" 
+								ng-model="data.portal_data.RefNumber" 
+								placeholder="">
+						</div>
+					</div>
+					<div class="col-md-4 ">
+						<div class="form-group select">
+							<label>Type</label>
+							<select class="form-control" 
+								required
+								ng-model="data.internal_type" 
+								ng-options="s for s in settings.internal_types" 
+								pop-show="{{errors.internal_number}}" 
+								pop="{{errors.internal_number}}" 
+								pop-placement="top">
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group required" show-errors>
+							<label>Mid Number </label>
+							<input name="MidNumber" 
+							required 
+							typeahead="mid for mid in mids | filter:$viewValue:startsWith | limitTo:8" 
+							type="text" 
+							class="form-control" 
+							pop-show="{{errors.MidNumber}}" 
+							pop="{{errors.MidNumber}}" 
+							pop-placement="right" 
+							ng-model="data.portal_data.MidNumber" 
+							placeholder="">
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group required" show-errors>
+							<label>Chargeback Amount </label>
+							<input name="ChargebackAmt" 
+							required type="text" 
+							class="form-control" 
+							pop-show="{{errors.ChargebackAmt}}" 
+							pop="{{errors.ChargebackAmt}}" 
+							pop-placement="right" 
+							amount ng-model="data.portal_data.ChargebackAmt" 
+							placeholder="">
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group required" show-errors>
+							<label>Chargeback Date </label><br><br>
+							<div class="input-group">
+								<input name="chargebackDate"
+								   class="form-control dp" 
+								   required  
+								   type="text" 
+								   ng-model="data.chargebackDate" 
+								   is-open="opened" 
+								   isdate 
+								   datepicker-popup="MM/dd/yyyy"  
+								   datepicker-options="dateOptions" 
+								   max-date="dtmax"
+								   placeholder="MM/DD/YYYY">
+								<span class="input-group-btn">
+	                				<button type="button" class="btn btn-default"  ng-click="open($event, opened=true)"><i class="glyphicon glyphicon-calendar"></i></button>
+              					</span>
+							</div>
+						</div>
+					</div>
+				</div>	
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group required" show-errors data-tooltip-html-unsafe="This is the first 1 to 6 digits of your customers credit card number.<br> NOTE:<br>Never include the full credit card number!">
+							<label>CC Prefix  
+								<span class="pull-right">
+									<span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+								</span>
+							</label>
+							<input name="CcPrefix" 
+								ng-minlength="1" 
+								ng-maxlength="6" 
+								required type="text" 
+								class="form-control" 
+								pop-show="{{errors.CcPrefix}}" 
+								pop="{{errors.CcPrefix}}" 
+								pop-placement="right" ng-model="data.portal_data.CcPrefix" placeholder="" ng-blur="methods.getCardType(); methods.getCodes();">
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group required" show-errors
+							 data-tooltip-html-unsafe="This is the last 4 to 6 digits of your customers credit card number.<br> NOTE:<br>Never include the full credit card number!">
+							<label>CC Suffix 
+								<span class="pull-right">
+									<span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+								</span>
+							</label>
+							<input name="CcSuffix" 
+								ng-minlength="4" 
+								ng-maxlength="6" 
+								required 
+								type="text" 
+								class="form-control" 
+								pop-show="{{errors.CcSuffix}}" 
+								pop="{{errors.CcSuffix}}" 
+								pop-placement="right" 
+								ng-model="data.portal_data.CcSuffix" 
+								placeholder="" 
+								ng-blur="methods.getCardType()">
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group select" required="required">
+							<label>CC Type </label>
+							<select ng-disabled="data.portal_data.CcPrefix.length >= 4" 
+								class="form-control" 
+								ng-model="data.gateway_data.CcType" 
+								ng-options="ct for ct in settings.cctypes">
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">
+						<div class="form-group select required" show-errors>
+							<label>Currency</label>
+							<select id="selectedCurrency"
+									required
+									name="selectedCurrency"
+									style="padding-top: 0px; padding-bottom: 0px;"
+									class="form-control"
+									pop-show="{{errors.Currency}}" 
+									pop="{{errors.Currency}}" 
+									pop-placement="right" 
+									ng-model="data.gateway_data.Currency"
+									ng-change="methods.changeCurrency(data.gateway_data.Currency)"
+									ng-options="currency for currency in settings.currencies">
+							</select>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group required" show-errors
+					data-tooltip-html-unsafe="Please enter a valid reason code. Enter NA if not available." tooltip-placement="top">
+						<label>Reason Code
+							<span class="pull-right">
+								<span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+							</span>
+						</label>
+							<input name="ReasonCode" 
+								typeahead="reason as reason.Code for reason in codes | filter:$viewValue | limitTo:8"
+								required type="text" 
+								ng-init="code"
+								class="form-control" 
+								pop-show="{{errors.ReasonCode}}"
+								pop="{{errors.ReasonCode}}" 
+								pop-placement="right" 
+								ng-model="data.portal_data.ReasonCode"
+								typeahead-template-url="/app/templates/codes.html"
+								typeahead-on-select="onSelect($item)"
+								placeholder="">
+						</div>
+					</div>
+					<div class="col-md-7">
+						<div class="form-group required" show-errors 
+					data-tooltip-html-unsafe="Please enter a description for the reason code. Enter NA if not available." tooltip-placement="top">
+						<label>Reason Text
+							<span class="pull-right">
+								<span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+							</span>
+						</label>
+							<input name="ReasonText" 
+								required 
+								typeahead="reason as reason.Text for reason in codes | filter:$viewValue | limitTo:8"
+								type="text" 
+								ng-init="dear"
+								class="form-control" 
+								pop-show="{{errors.ReasonText}}"
+								pop="{{errors.ReasonText}}" 
+								pop-placement="right" 
+								typeahead-template-url="/app/templates/codes.html"
+								typeahead-on-select="onSelect($item)"
+								ng-model="data.portal_data.ReasonText"
+								placeholder="">
+						</div>
+					</div>
+				</div>	
+
+			<div class="row">
+				<div class="col-md-4" ng-if="data.gateway_data.Currency == 'OTHER'" ng-controller="UpperCtrl">
+					<div class="form-group required" show-errors data-tooltip-html-unsafe="Please enter a valid ISO currency code." tooltip-placement="top">
+					<label>Currency
+						<span class="pull-right">
+							<span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+						</span>
+					</label> 
+					<input name="newCurrency"
+							required
+							type="text" 
+							class="form-control" 
+							pop-show="{{errors.newCurrency}}"
+							pop="{{errors.newCurrency}}"
+							ng-model="data.newCurrency" 
+							placeholder="Enter Currency Code:" 
+							ng-blur="methods.newCurrency(data.newCurrency);">
+					</div>
+				</div>
+			</div>	
+
+				<h4 style="margin-top: 40px; font-weight: bold;">Response Information</h4>
+
+				<div style="font-size: 12px; color: #999; padding-bottom: 10px;">Your bank will usually provide a fax number to send the response to. The values are prepoulated with values set in <a href="/account">your account</a>.</div>
+
+				<div class="row bt">
+					<div class="col-md-12">
+						<div class="form-group" show-errors>
+							<label>Response Fax</label>
+							<input name="send_to_fax" 
+								type="text" 
+								class="form-control" 
+								pop-show="{{errors.send_to_fax}}" 
+								pop="{{errors.send_to_fax}}" 
+								pop-placement="right" 
+								ng-model="data.send_to.fax" 
+								pop-append-to-body>
+						</div>
+					</div>
+				</div>
+				<div class="form-group btns">
+					<button type="submit" class="btn btn-success pull-right">Save New Chargeback</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</form>
+<div id="tooltip" style="opacity: 0;">
+    <div class="content"></div>
+</div>

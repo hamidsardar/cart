@@ -1,0 +1,11 @@
+public/
+assets/
+mongo/
+tmp/
+views/
+test/
+tools/
+.git/
+.DS_Store
+.env*
+src

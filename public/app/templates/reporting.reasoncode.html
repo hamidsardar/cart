@@ -1,0 +1,44 @@
+<div style="display: block; overflow: hidden; margin-bottom: 25px;">
+    <div class="pull-right merchantSelect">
+        <input ng-model="selectedMerchant" typeahead="merchant as merchant.name for merchant in merchants | filter:$viewValue" class="form-control" placeholder="Filter By Merchant" ng-click="showList()" typeahead-on-select='setMerchant($item, $model, $label)' />
+    </div>
+    <div class="pull-right dateRange" style="margin-right: 10px">
+        <a href="#" datepicker-popup="MM/dd/yyyy" datepicker-options="dateOptions" ng-model="date.start.val" is-open="date.start.opened" ng-click="date.start.opened=true" isdate >{{date.start.val | date:'MMM dd, yyyy'}}</a> thru
+        <a href="#" datepicker-popup="MM/dd/yyyy" datepicker-options="dateOptions" ng-model="date.end.val" is-open="date.end.opened" ng-click="date.end.opened=true" isdate >{{date.end.val | date:'MMM dd, yyyy'}}</a>
+    </div>
+    <h3 style="margin-top: 5px;">Reason Codes Report</h3>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-8 col-md-offset-1">
+        <div class="btn-group">
+            <div class="btn-group ">
+            <label class="btn btn-custom" ng-class="{'btn-active': active == 'count'}" ng-model="graphToggle" ng-click="volume=false; animateButton('count');"> By Count</label>
+            <label class="btn btn-custom" ng-class="{'btn-active': active == 'volume'}" ng-model="graphToggle"  ng-click="volume=true; animateButton('volume');"> By Volume</label>
+        </div>
+        </div>
+        
+        <div class="dash-stat dash-darkblue" ng-hide="volume">
+            <div class="stat-head stat-head-red">Reason Codes by Count</div>
+                <div class="stat">
+                    <div reason-bar control="graphBarReasons"></div>
+                </div>  
+        </div>
+    </div>
+</div>
+
+<div class="row">   
+    <div class="col-md-8 col-md-offset-1" ng-show="volume">
+        <div class="dash-stat dash-darkblue">
+            <div class="stat-head stat-head-red">Reason Codes by Volume</div>
+                <div class="stat">
+                    <div reason-bar control="graphBarReasons2"></div>
+                </div>  
+            </div>
+        </div>
+    </div>  
+</div>      
+
+<div id="tooltip" style="opacity: 0;">
+    <div class="content"></div>
+</div>

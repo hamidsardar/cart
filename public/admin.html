@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="app" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="app" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="app" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="app" ng-strict-di class="no-js"> <!--<![endif]-->
+<head>
+	<base href="/admin">
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	
+	<title>ADMIN:Chargeback.com</title>
+
+	<!-- Facebook Meta -->
+	<meta property="og:type" content="Chargeback.com | Managed Chargeback Representment" />
+	<meta property="og:url" content="https://www.Chargeback.com/" />
+	<meta property="og:image" content="/images/chargeback-shield.95915bac.png" />
+	<meta property="og:description" content="Chargeback.com Saves Merchants Time and Money In The Fight Against Chargebacks" />
+	
+	<!-- Twitter Meta -->
+	<meta name="twitter:description" content="Chargeback.com Saves Merchants Time and Money In The Fight Against Chargebacks">
+	<meta name="twitter:title" content="Chargeback.com | Managed Chargeback Representment">
+
+	<!-- General Meta -->
+	<meta http-equiv="content-type" content="text/html; charset=utf8" />
+	<meta name="description" content="Chargeback.com Saves Merchants Time and Money In The Fight Against Chargebacks" />
+	<meta name="keywords" content="chargeback" />
+	<meta name="author" content="www.Chargeback.com" />
+	<meta name="robots" content="index, follow" />
+	<meta name="revisit-after" content="1 Week" />
+	<meta name="language" content="EN" />
+	<meta name="copyright" content='2015' />
+	
+
+	<!-- Favicon -->
+	<!-- For IE -->
+	<!--[if IE]><link rel="shortcut icon" href="<%= cdn %>/images/favicon.ico"><![endif]-->
+	<!-- For Modern Browsers with PNG Support -->
+	<link href="/images/chargeback-shield.png" rel="icon" type="image/x-ico" />
+	<link rel="shortcut icon" href="/images/chargeback-shield.png" type="image/x-icon" /> 
+	<link href="/images/chargeback-shield.png" rel="apple-touch-icon-precomposed" />
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+
+
+	
+
+	<!-- build:js /assets/a.js -->
+		<script type="text/javascript" src="/lib/console-sham.js"></script>
+		<script type="text/javascript" src="/bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
+		<script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
+		<script type="text/javascript" src="/bower_components/angular-resource/angular-resource.min.js"></script>
+		<script type="text/javascript" src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+		<script type="text/javascript" src="/bower_components/angular-animate/angular-animate.min.js"></script>
+		<script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+		<script type="text/javascript" src="/bower_components/lodash/lodash.js"></script>
+		<script type="text/javascript" src="/bower_components/angular-bootstrap-show-errors/src/showErrors.js"></script>
+		<script type="text/javascript" src="/bower_components/ngInfiniteScroll/build/ng-infinite-scroll.min.js"></script>
+		<script type="text/javascript" src="/bower_components/moment/min/moment.min.js"></script>
+		<script type="text/javascript" src="/bower_components/angular-filter/dist/angular-filter.min.js"></script>
+		<script type="text/javascript" src="/bower_components/angular-busy/dist/angular-busy.min.js"></script>
+<!--		<script type="text/javascript" src="/bower_components/angular-csv-import/dist/angular-csv-import.js"></script> -->
+		<script type="text/javascript" src="/admin/modules/utils/angular-csv-import.js"></script>
+		<script type="text/javascript" src="/bower_components/angulartics/dist/angulartics.min.js"></script>
+		<script type="text/javascript" src="/bower_components/angulartics/dist/angulartics-ga.min.js"></script>
+    	<script type="text/javascript" src="/lib/AngularUtils.js"></script>
+		<script type="text/javascript" src="/app/modules/User.js"></script>
+		<script type="text/javascript" src="/admin/modules/Login.js"></script>
+		<script type="text/javascript" src="/admin/modules/Home.js"></script>
+		<script type="text/javascript" src="/admin/modules/Dashboard.js"></script>
+		<script type="text/javascript" src="/admin/modules/CsvUpload.js"></script>
+		<script type="text/javascript" src="/admin/modules/Users.js"></script>
+		<script type="text/javascript" src="/admin/index.js"></script>
+		<!-- also make sure to add new files to /karma.dev.conf.js for testing -->
+	<!-- endbuild -->
+
+
+
+
+	<!-- build:less /assets/a.css -->
+		<link rel="stylesheet/less" href="/less/app.less" />
+		<link rel="stylesheet/less" href="/less/admin.less" />
+	<!-- endbuild -->
+
+	<link rel="stylesheet" ng-href="{{ settings.whitelabelcss }}"/>
+
+	<!-- build:ignore-in-production -->
+		<script type="text/javascript" src="/bower_components/less/dist/less.min.js"></script>
+	<!-- endbuild -->
+	
+
+
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+		<script src="/vendor/html5shiv.js"></script>
+		<script src="/vendor/respond.min.js"></script>
+		<link href="/respond-proxy.html" id="respond-proxy" rel="respond-proxy" />
+		<link href="/images/respond.proxy.gif" id="respond-redirect" rel="respond-redirect" />
+		<script src="/vendor/respond.proxy.js"></script>
+	<![endif]-->
+</head>
+<body>
+
+
+<!--[if lt IE 7]>
+	<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+
+	<nav></nav>
+	<div id="pages" class="container admin" ui-view ></div>
+	<footer></footer>
+
+
+<!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6. chromium.org/developers/how-tos/chrome-frame-getting-started -->
+<!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif] -->
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-50518896-2', 'auto');
+  //ga('send', 'pageview');
+</script>
+
+</body>
+</html>

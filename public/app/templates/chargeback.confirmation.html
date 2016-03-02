@@ -1,0 +1,37 @@
+<div class="row">
+	
+	<div class="col-md-4 col-md-push-8 form-sidebar">
+
+		<div class="side-cbinfo" style="margin-top: 26px;">
+			<div class="side-main-head">KEEP IN MIND</div>
+			<div>
+				<ul>
+					<li>It may take some time to process your document due to high volumes.</li>
+
+					<li>Processors may ask for additional information.</li>
+
+					<li>It can take one to four weeks for your bank to make a decision. They will notify you directly if you have won or lost the chargeback. Once you receive notification from your bank you can update the status in CART. </li>
+
+					<li> An errored status means that your dispute has not been sent. Please contact us and we will work with you to correct the error.
+					</li>
+				</ul>
+			</div>	
+		</div>
+
+	</div>
+	<div class="col-md-8 col-md-pull-4">
+		
+		<div class="jgs-form">
+		<h2 style="font-weight: bold;">Dispute Sent For {{data.portal_data.ChargebackAmt | isoCurrency:currency}}</h2>
+			<div style="font-size: 16px; margin-top: 40px;">
+				Congratulations! Your chargeback response is processing. If you have provided a fax number the response will be sent automatically. If you need to upload your response online or email it to your bank please check back later to download the PDF of your response document.
+			</div>
+			<div style="margin-top: 50px;">
+				<a href="/chargebacks" class="btn btn-info">More Chargebacks</a>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+	

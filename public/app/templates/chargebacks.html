@@ -1,0 +1,108 @@
+<div class="row">
+	<div style="display: block; overflow: hidden; margin-bottom: 25px;">
+		<div class="pull-right merchantSelect">
+	  	<input ng-model="selectedMerchant" typeahead="merchant as merchant.name for merchant in merchants | filter:$viewValue" class="form-control" placeholder="Filter By Merchant" ng-click="showList()" typeahead-on-select='setMerchant($item, $model, $label)' />
+	  </div>	
+		<div class="pull-right dateRange" style="margin-right: 10px">
+			<a href="#" datepicker-popup="MM/dd/yyyy" datepicker-options="dateOptions" ng-model="date.start.val" is-open="date.start.opened" ng-click="date.start.opened=true" isdate >{{date.start.val | date:'MMM dd, yyyy'}}</a> thru
+			<a href="#" datepicker-popup="MM/dd/yyyy" datepicker-options="dateOptions" ng-model="date.end.val" is-open="date.end.opened" ng-click="date.end.opened=true" isdate >{{date.end.val | date:'MMM dd, yyyy'}}</a>
+		</div>
+	</div>
+</div>
+
+<div class="row" style="margin-bottom: 20px;">
+	<div class="pull-right" style="font-size: 32px; text-align: right;">
+		<a href="#" ng-click="download()" tooltip="Download All Chargebacks"><span class="glyphicon glyphicon-download"></span></a>
+		<a href="/chargeback" tooltip="Add Chargebacks"><span class="glyphicon glyphicon-plus-sign"></span></a>
+	</div>
+	<div class="pull-right" style="margin-right: 10px">
+		<input ng-model="q" type="text" class="form-control pull-right" name="query" autocomplete="off" placeholder="Search" ng-keyup="cbs.search(q); $event.stopPropagation();">
+	</div>
+	<h3 style="margin-top: 5px;">Chargebacks Detail</h3>
+</div>
+
+<div class="row" style="margin-bottom: 20px;" ng-if="filters">
+	<div class="col-sm-12" style="text-align: center;">Additional Filters: {{filters}} (<a href="/chargebacks">Clear</a>)</div>
+</div>
+
+
+<div class="animated-grid chargebacks" infinite-scroll="cbs.nextPage(q)" infinite-scroll-disabled="cbs.busy">
+	<div class="row head">
+		<div class="col-sm-6">
+			<div class="row">
+				<div class="col-sm-2">Remove</div>
+				<div class="col-sm-3">Date</div>
+				<div class="col-sm-3">Amount</div>
+				<div class="col-sm-4">Mid</div>
+			</div>
+		</div>			
+		<div class="col-sm-6">
+			<div class="row">
+				<div class="col-sm-3">Customer</div>
+				<div class="col-sm-3">Case Number</div>
+				<div class="col-sm-3">Status</div>
+		<!-- Download Link -->
+				<div class="col-sm-3">
+					<span ng-if="n_pdfs_tobe_downloaded > 0" class="download" ng-click="pdf_bulk_download_click()"><a href="">Download <span class="glyphicon glyphicon-download"></span></a></span>
+					<span ng-if="0 == n_pdfs_tobe_downloaded">Download PDFs </span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row" ng-repeat="cb in cbs.data" ng-if="cb.visible == null || cb.visible">
+	<div class="col-sm-6">
+		<div class="row">
+			<div ng-show="cb.status != 'Sent' && cb.status != 'Won' && cb.status != 'Lost' && cb.status != 'Errored' && cb.status != 'Accept'" class="col-sm-2" ng-click="methods.hideChargeback(cb, 'Are you sure you want to remove this chargeback?', 'Remove it', 'Cancel')"><span class="glyphicon glyphicon-remove-circle"></span></div>
+			<div ng-hide="cb.status != 'Sent' && cb.status != 'Won' && cb.status != 'Lost' && cb.status != 'Errored' && cb.status != 'Accept'" class="col-sm-2" ng-click="goTo(cb)"></div>
+			<div class="col-sm-3" ng-click="goTo(cb)">{{cb.chargebackDate | date:'MM/dd/yyyy'}}</div>
+			<div class="col-sm-3" ng-click="goTo(cb)">{{cb.portal_data.ChargebackAmt | isoCurrency:cb.gateway_data.Currency || currency }}</div>
+			<div class="col-sm-4" ng-click="goTo(cb)">{{cb.portal_data.MidNumber}}</div>
+		</div>
+	</div>		
+	<div class="col-sm-6">
+		<div class="row">	
+			<div class="col-sm-3" ng-click="goTo(cb)">{{cb.gateway_data.FirstName}} {{cb.gateway_data.LastName}}&nbsp;</div>
+			<div class="col-sm-3" ng-click="goTo(cb)">{{cb.portal_data.CaseNumber}}</div>
+			<div class="col-sm-3 status-colors" ng-click="goTo(cb)">
+				<span ng-if="cb.status == 'New'" class="{{cb.status}}"><b>New</b>: Work Chargeback</span>
+				<span ng-if="cb.status != 'New'" class="{{cb.status}}">
+					<span ng-if="cb.status == 'Errored'" class="text-danger">{{cb.status}} &nbsp;</span>
+					<span ng-if="cb.status != 'Errored'" >{{cb.status}} &nbsp;</span>
+					<span ng-if="cb.status == 'Sent'" class="glyphicon glyphicon-send"></span>
+					<span ng-if="cb.status == 'In-Progress'" class="glyphicon glyphicon-circle-arrow-right"></span>
+					<span ng-if="cb.status == 'Won'" class="glyphicon glyphicon-thumbs-up"></span>
+					<span ng-if="cb.status == 'Lost'" class="glyphicon glyphicon-thumbs-down"></span>
+	                                <span ng-if="cb.status == 'Accept'" class="glyphicon glyphicon-thumbs-down"></span>
+					<span ng-if="cb.status == 'Errored'" class="glyphicon glyphicon-exclamation-sign text-danger"></span>
+				</span>
+			</div>
+				<!-- Download checkbox -->
+			<div class="col-sm-3">
+				<input type="checkbox" ng-model="cb.checked" ng-click="pdf_checkbox(cb)" ng-disabled="(['Accept','Sent', 'Won', 'Lost'].indexOf(cb.status) < 0) || !cb.docgen">
+			</div>
+		</div>
+	</div>		
+</div>
+
+<div class="row" ng-if="cbs.loaded && cbs.data.length == 0">
+	<div class="col-sm-12"><h3>No chargebacks found {{date.start.val | date:'MM/dd/yyyy'}} thru {{date.end.val | date:'MM/dd/yyyy'}}</h3></div>
+	</div>
+	<div class="row" ng-if="!cbs.loaded">
+		<div class="col-sm-12"><h3 style="color: #999;">Loading Chargebacks...</h3></div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+

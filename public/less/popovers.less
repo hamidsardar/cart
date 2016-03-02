@@ -1,0 +1,71 @@
+
+.popover {
+  min-width: 200px;
+  background-color: @jgsPopColor;
+  border: 1px solid @jgsPopColor;
+  &.popover-confirmation {
+    background-color: #444;
+    border-color: #444;
+    font-size: 13px !important;
+  line-height: 20px;
+  padding: 10px 6px !important;
+  .box-shadow(0 1px 10px 0 rgba(0,0,0,.15));
+  }
+  color: white; 
+}
+.popover {
+  .popover-title {
+    background-color: inherit;
+    font-weight: 600;
+    border-bottom: none;
+    padding: 8px 14px 2px;
+  }
+  &.top .arrow {
+    &:after {
+      border-top-color: @jgsPopColor;
+    }
+  }
+  &.right .arrow {
+    &:after {
+      border-right-color: @jgsPopColor;
+    }
+  }
+  &.bottom .arrow {
+    &:after {
+      border-bottom-color: @jgsPopColor;
+    }
+  }
+  &.left .arrow {
+    &:after {
+      border-left-color: @jgsPopColor;
+      
+    }
+  }
+  &.popover-confirmation {
+    &.top .arrow {
+      &:after {
+        border-top-color: #444;
+      }
+    }
+    &.right .arrow {
+      &:after {
+        border-right-color: #444;
+      }
+    }
+    &.bottom .arrow {
+      &:after {
+        border-bottom-color: #444;
+      }
+    }
+    &.left .arrow {
+      &:after {
+        border-left-color: #444;
+        
+      }
+    }
+  }
+}
+.popover-btns {
+  .clearfix;
+  margin-top: 20px; 
+}

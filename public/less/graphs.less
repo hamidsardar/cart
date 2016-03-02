@@ -1,0 +1,138 @@
+.percentage {
+	text {
+		font-size: 7rem;
+  		font-weight: 400;
+  		line-height: 16rem;
+  		fill: @jgsDarkBlue;
+	}
+	margin: 0 auto;
+	path.color0 {
+		fill: @jgsDarkOrange;
+	}
+	path.color1 {
+		fill: @jgsDarkBlue;
+	}
+}
+#reporting-views {
+	.percentage {
+		text {
+			font-size: 5rem;
+		}
+	}
+}
+
+.d3-tip {
+  line-height: 1;
+  padding: 6px;
+  background: rgba(96, 96, 96, 0.9);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 6px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(96, 96, 96, 0.9);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+.axis {
+	path, line{
+		fill: none;
+		stroke: white;
+		shape-rendering:crispEdge;
+	}
+
+	text {
+		font-family: sans-serif;
+		font-size: 11px;
+		stroke: none;
+		fill: #fff;
+		shape-rendering:crispEdge;
+	}
+}
+.area {
+	fill: white;
+}
+.tick {
+	stroke-dasharray: 1, 2;
+	color: white;
+}
+
+.bar {
+  fill: white;
+}
+
+.bar:hover {
+  fill: darken(@jgsBlue, 12%);
+}
+
+
+.pie {
+	font: 10px sans-serif;
+	text-shadow: none;
+	.report-type {
+		font-size: 16px;
+	}
+	.total{
+  		font-size: 18px;
+  		font-weight: bold;
+	}
+	.units{
+		fill: gray;
+		font-size: 12px;
+	}
+	.label{
+		fill: #CCC;
+		font-size: 12px;
+		font-weight: bold;
+	}
+	.value{
+		font-size: 12px;
+		font-weight: bold;
+	}
+	.center_group {
+		cursor: pointer;	
+	}
+	path {
+		cursor: pointer;
+	}
+}
+
+#tooltip {
+    position: absolute;
+    width: 200px;
+    height: auto;
+    padding: 10px;
+    z-index: 100;
+    background-color: white;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    -mox-box-shadow: 4px 4px 4px 10px rgba(0, 0, 0, 0.4);
+    box-shadow: 4px 4px 10px rbga(0, 0, 0, 0.4);
+    pointer-events: none;
+    p {
+    	margin: 0;
+    	font-family: sans-serif;
+    	font-size: 16px;
+    	line-height: 20px;
+	}
+
+}
+
+

@@ -1,0 +1,234 @@
+
+<div class="row" style="margin-bottom: 30px; background-color: #efefef; border-radius: 5px;" ng-if="data.status == 'Sent'">
+	<div class="col-sm-12" style="padding: 24px; text-align: center;">
+		<a class="btn btn-success pull-left" ng-click="methods.wonlost(true, 'Are you sure you want to mark this chargeback as won?', 'Yes, we won!', 'No, cancel.')">Won</a> <a class="btn btn-danger pull-right" ng-click="methods.wonlost(false, 'Are you sure you want to mark this chargeback as lost?', 'Yes, we lost!', 'No, cancel.')">Lost</a>
+		<span style="font-size: 18px;">Report Status</span>
+	</div>
+</div>
+
+<div ng-if="data.status == 'New' || data.status == 'In-Progress'">
+
+	<div class="alert alert-warning" style="margin-bottom: 30px;" ng-show="data.type == 'cnp' && (!data.gateway_data.AvsStatus || !data.gateway_data.CvvStatus || (data.shipped && (!data.shipping_data.TrackingNum || !data.shipping_data.TrackingSum )))">
+		<strong>WARNING!</strong> 
+		Your odds of success are very low when you do not include the following:<br/>
+			<div style="margin-left: 90px; font-weight: bold;" ng-if="!data.gateway_data.AvsStatus">&bullet; AVS code</div>
+			<div style="margin-left: 90px; font-weight: bold;" ng-if="!data.gateway_data.CvvStatus">&bullet; CVV code</div>
+			<div style="margin-left: 90px; font-weight: bold;" ng-if="!data.shipping_data.TrackingNum">&bullet; Shipping Tracking Number</div>
+			<div style="margin-left: 90px; font-weight: bold;" ng-if="!data.shipping_data.TrackingSum">&bullet; Shipping Tracking Summary</div>
+		<a ui-sref="chargeback.data">&lt; Go back and fix</a> 
+	</div>
+
+	<div class="alert alert-warning alert-dismissable" style="margin-bottom: 30px;" ng-show="data.type == 'cp' && !settings.has_receipt">
+		<strong>WARNING!</strong> You have entered a card present transaction and have not uploaded a sales receipt. Your odds of success are very low without uploading a sales receipt.<br/>
+		<a ui-sref="chargeback.data">&lt; Go back and fix</a> 
+	</div>
+
+</div>
+
+
+
+
+<div class="review-block first-block">
+	<h4>Chargeback</h4>
+	<div class="row">
+		<div class="col-sm-2"><span class="glyphicon glyphicon-backward"></span></div>
+		<div class="col-sm-10">
+			<div class="row" ng-if="data.chargebackDate || data.portal_data.MidNumber">
+				<div class="col-sm-6">Chargeback Date: {{data.chargebackDate | date:'MMM dd, yyyy'}}</div>
+				<div class="col-sm-6">MID Number: {{data.portal_data.MidNumber}}</div>
+			</div>
+			<div class="row" ng-if="data.portal_data.CaseNumber || data.portal_data.RefNumber">
+				<div class="col-sm-6">Case Number: {{data.portal_data.CaseNumber}}</div>
+				<div class="col-sm-6">Ref Number: {{data.portal_data.RefNumber}}</div>
+			</div>
+			<div class="row" ng-if="data.portal_data.ReasonCode || data.portal_data.ReasonText">
+				<div class="col-sm-6">Return Reason Code: {{data.portal_data.ReasonCode}}</div>
+				<div class="col-sm-6">Reason Text: {{data.portal_data.ReasonText}}</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="review-block">
+	<h4>Customer</h4>
+	<div class="row">
+		<div class="col-sm-2"><span class="glyphicon glyphicon-user"></span></div>
+		<div class="col-sm-10">
+			<div class="row">
+				<div class="col-sm-6">
+					{{data.gateway_data.FirstName}} {{data.gateway_data.LastName}}
+				</div>
+				<div class="col-sm-6">Email: {{data.crm_data.Email}}</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					{{data.gateway_data.BillingAddr1}}<span ng-if="data.gateway_data.BillingAddr2">, {{data.gateway_data.BillingAddr2}}</span>
+				</div>
+				<div class="col-sm-6"> Phone: {{data.gateway_data.Phone}}</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					{{data.gateway_data.BillingCity}}
+					<span ng-if="data.gateway_data.BillingState">, {{data.gateway_data.BillingState}}</span>
+					<span ng-if="data.gateway_data.BillingPostal"> {{data.gateway_data.BillingPostal}}</span>
+				</div>
+				<div class="col-sm-6">
+					<span ng-if="data.send_to.fax"> Response Fax: {{data.send_to.fax}}</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<span ng-if="data.crm_data.IpAddress">IP: {{data.crm_data.IpAddress}}</span>
+				</div>
+			</div>
+	</div>
+</div>
+
+<div class="review-block">
+	<h4>Payment</h4>
+	<div class="row">
+		<div class="col-sm-2"><span class="glyphicon glyphicon-credit-card"></span></div>
+		<div class="col-sm-10">
+			<div class="row">
+				<div class="col-sm-6">
+					<span ng-if="data.type == 'cp'">Card Present</span>
+					<span ng-if="data.type == 'cnp'">Card Not Present</span>
+				</div>
+				<div class="col-sm-6">Auth Code: {{data.gateway_data.AuthCode}}</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6"><span ng-if="data.portal_data.CcPrefix">{{data.portal_data.CcPrefix}}</span><span ng-if="!data.portal_data.CcPrefix">XXXX</span>-XXXX-XXXX-<span ng-if="data.portal_data.CcSuffix">{{data.portal_data.CcSuffix}}</span><span ng-if="!data.portal_data.CcSuffix">XXXX</span> <span ng-if="data.gateway_data.CcType">({{data.gateway_data.CcType}})</span></div>
+				<div class="col-sm-6">AVS Status: {{data.gateway_data.AvsStatus}}</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">Expires: {{data.gateway_data.CcExpire | ccexpires}}</div>
+				<div class="col-sm-6">CVV Status: {{data.gateway_data.CvvStatus}}</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="review-block">
+	<h4>Purchase</h4>
+	<div class="row">
+		<div class="col-sm-2"><span class="glyphicon glyphicon-shopping-cart"></span></div>
+		<div class="col-sm-10">
+			<div class="row">
+				<div class="col-sm-6">{{data.gateway_data.TransDate | date:'MMM dd, yyyy'}}</div>
+				<div class="col-sm-6">{{data.portal_data.ChargebackAmt | isoCurrency:currency}}</div>
+			</div>
+			<div class="row" ng-if="data.gateway_data.OrderId || data.gateway_data.TransId">
+				<div class="col-sm-6">Transaction Id: {{data.gateway_data.TransId}}</div>
+				<div class="col-sm-6">Order Id: {{data.gateway_data.OrderId}}</div>
+			</div>
+			<div class="row" ng-if="data.crm_data.IsRecurring || data.crm_data.IsFraud">
+				<div class="col-sm-6">Order Date: {{data.crm_data.OrderDate | date:'MMM dd, yyyy'}}</div>
+				<div class="col-sm-6">Is Fraud: {{data.crm_data.IsFraud}}</div>
+			</div>
+			<div class="row" ng-if="data.crm_data.ProductCrmName || data.crm_data.ProductName">
+				<div class="col-sm-6">Product Name: {{data.crm_data.ProductName}}</div>
+				<div class="col-sm-6">Product CRM Name: {{data.crm_data.ProductCrmName}}</div>
+			</div>
+			<div class="row" ng-if="data.gateway_data.TransStatus || data.gateway_data.TransType">
+				<div class="col-sm-6">Transaction Type: {{data.crm_data.TransType}}</div>
+				<div class="col-sm-6">Transaction Status: {{data.crm_data.TransStatus}}</div>
+			</div>
+			<div class="row" ng-if="data.crm_data.RMA || data.gateway_data.Currency">
+				<div class="col-sm-6">RMA: {{data.crm_data.Rma}}</div>
+				<div class="col-sm-6">Currency: {{data.gateway_data.Currency}}</div>
+			</div>
+			<div class="row" ng-if="data.gateway_data.TransAmout">
+				<div class="col-sm-6">Order Amount: {{data.gateway_data.TransAmt}}</div>
+				<div class="col-sm-6"></div>
+			</div>
+		</div>			
+	</div>
+</div>
+
+<div class="review-block" ng-if="data.recurring">
+	<h4>Recurring</h4>
+	<div class="row">
+		<div class="col-sm-2"><span class="glyphicon glyphicon-refresh"></span></div>
+		<div class="col-sm-10">
+			<div class="row">
+				<div class="col-sm-6">Is Recurring: {{data.crm_data.IsRecurring}}</div>
+				<div class="col-sm-6">Cancel Date: {{data.crm_data.CancelDateSystem | date:'MMM dd, yyyy'}}</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="review-block" ng-if="data.refunded">
+	<h4>Refund</h4>
+	<div class="row">
+		<div class="col-sm-2"><span class="glyphicon glyphicon-transfer"></span></div>
+		<div class="col-sm-10">
+			<div class="row">
+				<div class="col-sm-6">Refund Date: {{data.crm_data.RefundDateFull | date:'MMM dd, yyyy'}}</div>
+				<div class="col-sm-6">Refund Amount: {{data.crm_data.RefundAmount}}</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="review-block" ng-if="data.shipped">
+	<h4>Shipping</h4>
+	<div class="row">
+		<div class="col-sm-2"><span class="glyphicon glyphicon-send"></span></div>
+		<div class="col-sm-10">
+			<div class="row">
+				<div class="col-sm-6">
+					{{data.crm_data.DeliveryAddr1}}<span ng-if="data.crm_data.DeliveryAddr2">, {{data.crm_data.DeliveryAddr2}}</span><br/>
+					{{data.crm_data.DeliveryCity}}<span ng-if="data.crm_data.DeliveryState || data.crm_data.DeliveryPostal">, {{data.crm_data.DeliveryState}} {{data.crm_data.DeliveryPostal}}</span><br/>
+					{{data.crm_data.DeliveryCountry}}
+				</div>
+				<div class="col-sm-6">
+					<div>{{data.shipping_data.company}}
+						<span ng-if="data.shipping_data.ShippingDate"> on {{data.shipping_data.ShippingDate | date:'MMM dd, yyyy'}}</span>
+					</div>
+					<div>Tracking: {{data.shipping_data.TrackingNum}}</div>	
+				</div>	
+			</div>
+			<div class="row" ng-if="data.shipping_data.TrackingSum">
+				<div class="col-sm-12">{{data.shipping_data.TrackingSum}}</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="review-block" ng-show="(data.attachments | filter: { type:'terms' }).length">
+	<h4>Terms</h4>
+	<div class="row" ng-repeat="item in data.attachments | filter: { type:'terms' }">
+		<div class="col-sm-12"><img ng-src="{{item.urls.large}}"></div>
+	</div>
+</div>
+<div class="review-block" ng-show="(data.attachments | filter: { type:'checkout' }).length">
+	<h4>Checkout</h4>
+	<div class="row" ng-repeat="item in data.attachments | filter: { type:'checkout' }">
+		<div class="col-sm-12"><img ng-src="{{item.urls.large}}"></div>
+	</div>
+</div>
+<div class="review-block" ng-show="(data.attachments | filter: { type:'receipt' }).length">
+	<h4>Receipts</h4>
+	<div class="row" ng-repeat="item in data.attachments | filter: { type:'receipt' }">
+		<div class="col-sm-12"><img ng-src="{{item.urls.large}}"></div>
+	</div>
+</div>
+<div class="review-block" ng-show="(data.attachments | filter: { type:'additional' }).length">
+	<h4>Attachments</h4>
+	<div class="row" ng-repeat="item in data.attachments | filter: { type:'additional' }">
+		<div class="col-sm-12"><img ng-src="{{item.urls.large}}"></div>
+	</div>
+</div>
+
+
+<div class="review-block" ng-if="data.additional_comments">
+	<h4>Comments</h4>
+	<div class="row">	
+		<div class="col-md-12 details" style="white-space: pre-line;">{{data.additional_comments}}</div>
+	</div>
+</div>

@@ -1,0 +1,35 @@
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	<div class="container">
+		<div class="navbar-header">
+			
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse" ng-click="isCollapsed = !isCollapsed">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/"><img ng-src="{{settings.logo}}"></a>
+		</div>
+
+		<div class="navbar-collapse collapse"  collapse="isCollapsed">
+			<p ng-if="currentUser" class="navbar-text pull-right">{{ currentUser.name }}</p>
+			<ul class="nav navbar-nav" ng-if="!currentUser">
+				<li ng-class="{active: $state.includes('login')}"><a href="/login">Login</a></li>
+<!--			Removed the create link to prevent just anyone from creating accounts.(TAJ)
+<!--				<li ng-class="{active: $state.includes('create')}"><a href="/create">Create</a></li> -->
+			</ul>
+			<ul class="nav navbar-nav" ng-if="currentUser">
+				<li ng-class="{active: $state.includes('dashboard')}"><a href="/dashboard">Dashboard</a></li>
+				<li ng-class="{active: $state.includes('chargebacks') || $state.includes('chargeback.*')}"><a href="/chargebacks">Chargebacks</a></li>
+				<li ng-class="{active: $state.includes('reporting')}"><a href="/reporting/overview">Reporting</a></li>
+				<li ng-class="{active: $state.includes('account')}"><a href="/account">Account</a></li>
+				<li><a href="/logout">Log Out</a></li>
+			</ul>
+			<ul class="nav navbar-nav" style="float: right" ng-if="currentUser">
+        <li ng-class="{active: $state.includes('admindashboard')}"><a href="/admin/dashboard" class="navbar-nav pull-right">Admin Dashboard</a></li>
+      </ul>
+		</div>
+	</div>
+</div>
+	

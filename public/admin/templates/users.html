@@ -1,0 +1,60 @@
+
+<div class="row search" style="margin-bottom: 20px;">
+	<div class="col-md-8">
+		<h2>CART Users</h2>
+	</div>
+	<!-- user search -->
+	<div class="col-md-4" style="padding-top: 20px;">
+		<input ng-model="q" ng-if="admin == false" type="text" class="form-control pull-right" name="query" autocomplete="off" placeholder="Search" ng-keyup="users.search(q)">
+	</div>
+	<!-- admin search -->
+	<div class="col-md-4" ng-if="admin == true" style="padding-top: 20px;">
+		<input ng-model="q" type="text" class="form-control pull-right" name="query" autocomplete="off" placeholder="Search" ng-keyup="usersAdmin.search(q)">
+	</div>
+</div>
+
+<!-- If current user is not an admin, show only child accounts -->
+<div class="animated-grid chargebacks" ng-if="admin == false" infinite-scroll="users.nextPage(q)" infinite-scroll-disabled="users.busy">
+	<div class="row head">
+		<div class="col-sm-3">Username</div>
+		<div class="col-sm-3">Name</div>
+		<div class="col-sm-3">Email</div>
+		<div class="col-sm-3">Email</div>
+	</div>
+	<div class="row" ng-repeat="user in users.data">
+		<div class="col-sm-3">{{user.username}}</div>
+		<div class="col-sm-3">{{user.name}}</div>
+		<div class="col-sm-3">{{user.email}}</div>
+		<div class="col-sm-3"><a ng-click="login(user.username);">login as {{user.username}}</a></div>
+	</div>
+
+	<div class="row" ng-if="users.loaded && users.data.length == 0">
+		<div class="col-sm-12"><h3>No users found.</h3></div>
+	</div>	
+	<div class="row" ng-if="!users.loaded">
+		<div class="col-sm-12"><h3 style="color: #999;">Loading Users...</h3></div>
+	</div>	
+</div>
+
+<!-- If current user is an admin, show all accounts -->
+<div class="animated-grid chargebacks" ng-if="admin == true" infinite-scroll="usersAdmin.nextPageAdmin(q)" infinite-scroll-disabled="usersAdmin.busy">
+	<div class="row head">
+		<div class="col-sm-3">Username</div>
+		<div class="col-sm-3">Name</div>
+		<div class="col-sm-3">Email</div>
+		<div class="col-sm-3">Email</div>
+	</div>
+	<div class="row" ng-repeat="user in usersAdmin.data">
+		<div class="col-sm-3">{{user.username}}</div>
+		<div class="col-sm-3">{{user.name}}</div>
+		<div class="col-sm-3">{{user.email}}</div>
+		<div class="col-sm-3"><a ng-click="login(user.username);">login as {{user.username}}</a></div>
+	</div>
+
+	<div class="row" ng-if="usersAdmin.loaded && usersAdmin.data.length == 0">
+		<div class="col-sm-12"><h3>No users found.</h3></div>
+	</div>	
+	<div class="row" ng-if="!usersAdmin.loaded">
+		<div class="col-sm-12"><h3 style="color: #999;">Loading Users...</h3></div>
+	</div>	
+</div>

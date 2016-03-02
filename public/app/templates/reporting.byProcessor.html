@@ -1,0 +1,23 @@
+<div class="row search">
+	<div class="col-md-3">
+		<h2 style="margin-top: 0px;">by Merchant</h2>
+	</div>
+	<div class="col-md-3">
+		<input type="text" class="form-control pull-right" autocomplete="off" placeholder="Search By Processor" ng-model="search">
+	</div>
+
+	<div class="col-md-6 dateRange">
+		<a href="#" datepicker-popup="MM/dd/yyyy" datepicker-options="dateOptions" ng-model="date.start.val" is-open="date.start.opened" ng-click="date.start.opened=true" isdate >{{date.start.val | date:'MMM dd, yyyy'}}</a> thru
+		<a href="#" datepicker-popup="MM/dd/yyyy" datepicker-options="dateOptions" ng-model="date.end.val" is-open="date.end.opened" ng-click="date.end.opened=true" isdate >{{date.end.val | date:'MMM dd, yyyy'}}</a>
+	</div>
+</div>
+
+<div class="row" ng-repeat="gg in processorData | searchField: 'label' | filter: search | groupBy: 2">
+	<div class="col-md-6" ng-repeat="g in gg" style="text-align: center;">
+		<div class="pie" pie  graph-data="{{g}}" ></div>
+	</div>
+</div>
+
+<div id="tooltip" style="opacity: 0;">
+    <div class="content"></div>
+</div>

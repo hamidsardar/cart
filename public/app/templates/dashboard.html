@@ -1,0 +1,103 @@
+<div class="row">
+<div style="display: block; overflow: hidden; margin-bottom: 25px;">
+	<div class="pull-right merchantSelect">
+    	<input ng-model="selectedMerchant" typeahead="merchant as merchant.name for merchant in merchants | filter:$viewValue" class="form-control" placeholder="Filter By Merchant" ng-click="showList()" typeahead-on-select='setMerchant($item, $model, $label)' />
+    </div>
+	
+	<div class="pull-right dateRange" style="margin-right: 10px">
+		<a href="#" datepicker-popup="MM/dd/yyyy" datepicker-options="dateOptions" ng-model="date.start.val" is-open="date.start.opened" ng-click="date.start.opened=true" isdate >{{date.start.val | date:'MMM dd, yyyy'}}</a> thru
+		<a href="#" datepicker-popup="MM/dd/yyyy" datepicker-options="dateOptions" ng-model="date.end.val" is-open="date.end.opened" ng-click="date.end.opened=true" isdate >{{date.end.val | date:'MMM dd, yyyy'}}</a>
+	</div> 
+	<h3 style="margin-top: 5px;">Chargebacks Dashboard</h3>
+</div>	 
+<div class="row">
+	<div class="col-sm-4">
+		<div class="dash-stat">
+			<div class="stat-head">Status Summary</div>
+			<div class="stat">
+				<div class="row">
+					<div class="col-xs-7 col-xs-offset-1">
+						<span class="glyphicon glyphicon-inbox"></span>
+						<a href="chargebacks?status=New">New</a>
+					</div>
+					<div class="col-xs-4">
+						{{dbs.data_dashboard.New.count | number}}
+						<span ng-if="!dbs.data_dashboard.New">0</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-7 col-xs-offset-1">
+						<span class="glyphicon glyphicon-circle-arrow-right"></span>
+						<a href="chargebacks?status=In-Progress">In-Progress</a>
+					</div>
+					<div class="col-xs-4">
+						{{dbs.data_dashboard['In-Progress'].count | number}}
+						<span ng-if="!dbs.data_dashboard['In-Progress']">0</span>
+					</div>
+				</div>
+			    <div class="row">
+					<div class="col-xs-7 col-xs-offset-1">
+							<span class="glyphicon glyphicon-circle-arrow-right"></span>
+							<a href="chargebacks?status=Accept">Accepted</a>
+					</div>
+					<div class="col-xs-4">
+							{{dbs.data_dashboard['Accept'].count | number}}
+							<span ng-if="!dbs.data_dashboard['Accept']">0</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-7 col-xs-offset-1">
+						<span class="glyphicon glyphicon-send"></span>
+						<a href="chargebacks?status=Sent">Sent</a>
+					</div>
+					<div class="col-xs-4">
+						{{dbs.data_dashboard.Sent.count | number}}
+						<span ng-if="!dbs.data_dashboard.Sent">0</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-7 col-xs-offset-1">
+						<span class="glyphicon glyphicon glyphicon-ok-circle"></span>
+						<a href="chargebacks?status=Won">Complete</a>
+					</div>
+					<div class="col-xs-4">
+						{{dbs.data_dashboard.Complete.count | number}}
+						<span ng-if="!dbs.data_dashboard.Complete">0</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a href="/chargeback" class="btn btn-lg btn-info" style="margin-bottom: 20px; width: 100%;">Add New Chargeback</a>
+		<a href="/chargebacks" class="btn btn-lg btn-cb-orange" style="width: 100%;">View All Chargebacks</a>
+	</div>
+	<div class="col-sm-4">
+
+		<div class="dash-stat">
+			<div class="stat-head">Win Rate</div>
+			<div class="percentage" ng-if="dbs.data_dashboard.hwl" percentage control="winloss"></div>
+			<div class="subtext" ng-if="dbs.data_dashboard.hwl">{{dbs.data_dashboard.winloss.won | number}} chargebacks won</div>
+			<div class="stat" style="padding-bottom: 40px;" ng-if="!dbs.data_dashboard.hwl">No wins<br/>reported yet!</div>
+		</div>
+	</div>
+
+	<div class="col-sm-4">
+
+		<div class="dash-stat dash-green" style="margin-bottom: 32px;">
+			<div class="stat-head">Amount Won Back</div>
+			<div class="stat" style="cursor: pointer;" ui-sref="chargebacks({status: 'New'})">
+				{{dbs.data_dashboard.Won.sum | currency:"$":0}}
+				<span ng-if="!dbs.data_dashboard.New.sum">None yet!</span>
+			</div>
+		</div>
+
+		<div class="dash-stat" style="margin-bottom: 32px;">
+			<div class="stat-head">Pending Resolution</div>
+			<div class="stat" style="cursor: pointer;" ui-sref="chargebacks({status: 'Sent'})">
+				{{dbs.data_dashboard.Sent.sum | currency:"$":0}}
+				<span ng-if="!dbs.data_dashboard.Sent.sum">None yet!</span>
+			</div>
+		</div>
+	</div>
+
+</div>
+

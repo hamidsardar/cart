@@ -1,0 +1,68 @@
+language: node_js
+node_js:
+- 0.12.2
+services:
+- mongodb
+before_install: npm install -g grunt-cli
+install: npm install
+before_script: grunt && grunt --target=admin
+env:
+  global:
+  - NODE_ENV: test
+  - PORT: 5000
+  - SSL: "off"
+  - TOKEN_SECRET: naingaiLieSah5o
+  - MONGO_URI: mongodb://localhost:27017/chargeback-test
+  - BUCKET: chargebackcom
+  - AWS_REGION: us-west-2
+  - CDN: https://dksl2s5vm2cnl.cloudfront.net
+  - POSTMARK_API_KEY: POSTMARK_API_TEST
+  - MAIL_FROM_NAME: Chargeback
+  - MAIL_FROM_EMAIL: pull.user@chargeback.com
+  - AIRBRAKE: 69f846e293e956cde008c4f917218468
+  - DOCGEN: https://s3-us-west-2.amazonaws.com/cart-pdfs/
+  - secure: M3YSEJnWYdYGYDtCmv/y4rf7urHViaYBikGZsPiSAPDnq3nFEx5OY6J2PzDOoN2111b/VxS6Ec1ZmOULTkZ0OQsXt6XwWn+YKQsxj8nlLkrpoxpfRSX8fSBX/lvdInVQiRr0OtS3vbG4BkwTzFtu9y075G5fK4BDj1hAKgh4IqU=
+  - secure: kvvLABsWT4BaTPbqvzj09L3nyeli+98dJp3woKP/SSnvtVxm45CDci7Uut4u0Nh1j/4THu9oeEsTOG3IPJp2W6RYNd0ZUzDhlJGtfD2forjyPx4D1OMGHj6UAeGYqM6Cm9ZcrbzrWqewYu0jvk4AN7K0Dd5azjSnc6tuTP7RcUk=
+deploy:
+  - provider: s3
+    access_key_id: AKIAIXCNXSVBHMLAAXHQ
+    secret_access_key:
+      secure: JiEZAy0Y2ZXLXBcOHhs4MyWcGNhgkY+p5wkmjJ8I0ieRcE85DNSyvqtozpz805fj/Oxeva9+KApc08+iqd99rqVS6Sfb1ILN8LmXFAHNOl+OFYxDV4Y24r8ltNcaX9W3buvVkzYFdWgUqpFnbsBae4A3zzSA0mWLI4gtH6ujwQc=
+    bucket: "chargeback-builds"
+    skip_cleanup: true
+    region: us-west-2
+    local_dir: dist
+    on:
+      branch: master
+  - provider: s3
+    access_key_id: AKIAIXCNXSVBHMLAAXHQ
+    secret_access_key:
+      secure: JiEZAy0Y2ZXLXBcOHhs4MyWcGNhgkY+p5wkmjJ8I0ieRcE85DNSyvqtozpz805fj/Oxeva9+KApc08+iqd99rqVS6Sfb1ILN8LmXFAHNOl+OFYxDV4Y24r8ltNcaX9W3buvVkzYFdWgUqpFnbsBae4A3zzSA0mWLI4gtH6ujwQc=
+    bucket: "chargeback-builds-dev"
+    skip_cleanup: true
+    region: us-west-2
+    local_dir: dist
+    on:
+      branch: dev
+  - provider: codedeploy
+    access_key_id: AKIAIXCNXSVBHMLAAXHQ
+    secret_access_key:
+      secure: JiEZAy0Y2ZXLXBcOHhs4MyWcGNhgkY+p5wkmjJ8I0ieRcE85DNSyvqtozpz805fj/Oxeva9+KApc08+iqd99rqVS6Sfb1ILN8LmXFAHNOl+OFYxDV4Y24r8ltNcaX9W3buvVkzYFdWgUqpFnbsBae4A3zzSA0mWLI4gtH6ujwQc=
+    revision_type: github
+    region: us-west-2
+    application: cart
+    deployment_group: devs
+    on:
+      branch: dev
+  - provider: codedeploy
+    access_key_id: AKIAIXCNXSVBHMLAAXHQ
+    secret_access_key:
+      secure: JiEZAy0Y2ZXLXBcOHhs4MyWcGNhgkY+p5wkmjJ8I0ieRcE85DNSyvqtozpz805fj/Oxeva9+KApc08+iqd99rqVS6Sfb1ILN8LmXFAHNOl+OFYxDV4Y24r8ltNcaX9W3buvVkzYFdWgUqpFnbsBae4A3zzSA0mWLI4gtH6ujwQc=
+    revision_type: github
+    region: us-west-2
+    application: cart
+    deployment_group: production
+    on:
+      branch: master
+notifications:
+  slack: chargebackcom:tiSayoOUkZlXRnrlk3d9pwvR

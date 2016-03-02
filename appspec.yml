@@ -1,0 +1,22 @@
+# AWS CodeDeploy recipe
+version: 0.0
+os: linux 
+files:
+  - source: /
+    destination: /var/www/cart
+permissions:
+  - object: /var/www/cart
+    pattern: "**"
+    owner: justin
+hooks:
+  ApplicationStop:
+    - location: deploy_hooks/shutdown.sh
+      runas: justin
+  AfterInstall:
+    - location: deploy_hooks/createNodeModules.sh
+      runas: root
+    - location: deploy_hooks/npmInstall.sh
+      runas: justin
+  ApplicationStart:
+    - location: deploy_hooks/start.sh
+      runas: justin

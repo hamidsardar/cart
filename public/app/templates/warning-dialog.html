@@ -1,0 +1,7 @@
+<div class="modal-header">
+	<h3>You've been idle, simply click or move your mouse to stay logged in.</h3>
+</div>
+<div class="modal-body" idle-countdown="countdown" ng-init="countdown=20">
+	<p>You'll be logged out in <span class="label label-success">{{countdown}}</span> <span ng-pluralize="" count="countdown" when="{'one': 'second', 'other': 'seconds' }"></span>.</p>
+	<progressbar max="20" value="countdown" animate="true" class="progress-striped active" type="success"></progressbar>
+</div>

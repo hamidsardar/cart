@@ -1,0 +1,88 @@
+{
+	"users": [
+		{
+			"name": "CompanyName",
+			"username": "username",
+			"password": "hotdog",
+			"email": "justin@junder.com"
+		},
+		{
+			"name": "CompanyName2",
+			"username": "username2",
+			"password": "hotdog2",
+			"email": "justin@junder2.com",
+		  	"parentName" : ""
+		},
+		{
+			"name": "CompanyName3",
+			"username": "username3",
+			"password": "hotdog3",
+			"email": "justin@junder3.com"
+		}
+	],
+	"chargebacks": [
+		{
+			"portal_data": {
+				"Portal": "null",
+				"CaseNumber": "12456465546",
+				"RefNumber": "124677",
+				"CcPrefix": "4123",
+				"CcSuffix": "9087",
+				"ChargebackAmt": 8.98,
+				"MidNumber": "1200988766",
+				"ReasonCode": "83",
+				"ReasonText": "Non_possession of card (international)"
+			},
+			"gateway_data": {
+				"AuthCode": "74401",
+				"AvsStatus": "N",
+				"FirstName": "John",
+				"MiddleName": "L",
+				"LastName": "Wayne",
+				"BillingAddr1": "12 Main St",
+				"BillingAddr2": "Suite 10",
+				"BillingCity": "San Francisco",
+				"BillingCountry": "USA",
+				"BillingPostal": "94123",
+				"BillingState": "CA",
+				"Phone": "(415) 555-5555",
+				"CcExpire": "1115",
+				"Currency": "USD",
+				"CvvStatus": "N",
+				"OrderId": "1234654",
+				"TransHistory": "history...",
+				"TransId": "1234321",
+				"TransType": "card",
+				"TransDate": "2015-02-04"
+			},
+			"crm_data" : {
+				"OrderDate": "2015-02-04",
+				"DeliveryAddr1": "12 Main St",
+				"DeliveryAddr2": "Suite 10",
+				"DeliveryCity": "San Francisco",
+				"DeliveryCountry": "USA",
+				"DeliveryPostal": "94117",
+				"DeliveryState": "CA",
+				"Email": "larry@chargeback.com",
+				"IpAddress": "129.89.76.11",
+				"PricePoint": 9.00,
+				"ProductCrmName": null,
+				"ProductName": "Sports Jacket",
+				"IsFraud": false,
+				"IsRecurring": false,
+				"CancelDateSystem": "2015-02-04",
+				"RefundDateFull": "2015-02-04",
+				"RefundDatePartial": "2015-02-04",
+				"RefundAmount": 0.90,
+				"Rma": "90887768"
+			},
+			"shipping_data" : {
+				"has_tracking": true,
+				"ShippingDate": "2015-02-04",
+				"TrackingNum": "00987765554Z", 
+				"TrackingSum": "Delivered"
+			},
+		    "chargebackDate": "2015-05-12"
+		}
+	]	
+}

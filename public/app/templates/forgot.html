@@ -1,0 +1,41 @@
+
+<div class="row search" style="margin-bottom: 20px;">
+	<div class="col-md-12">
+		<h2 style="margin-top: 0px;">Reset Your Password</h2>
+	</div>
+</div>
+
+<div class="row">
+	
+	<div class="col-sm-4 col-sm-push-8 form-sidebar">
+
+	</div>
+	<div class="col-sm-8 col-sm-pull-4">
+		
+		<div ng-hide="data.sent" style="padding-bottom: 30px;">Enter your email and we'll send you a link to reset your password.</div>
+		<div ng-show="data.sent" class="alert alert-success">An email has been sent with a link to reset your password.</div>
+
+
+		<form name="forgotForm" 
+				role="form" 
+				class="jgs-form" 
+				ng-submit="forgot(data)" novalidate >
+			
+			<div class="row" ng-hide="data.sent">
+				<div class="col-md-12">
+					<div class="form-group" show-errors>
+						<label>Email</label>
+						<input name="email" type="email" required class="form-control" pop-show="{{errors.email}}" pop="{{errors.email}}" pop-placement="right" ng-model="data.email" pop-append-to-body>
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group btns" ng-hide="data.sent">
+				<button type="submit" class="btn btn-success pull-right">Send Reset Link</button>
+			</div>
+
+		</form>
+
+	</div>
+
+</div>

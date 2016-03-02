@@ -1,0 +1,51 @@
+// drag and drop zones in input pages.
+.ddzone {
+	background-color: @jgsDropZoneBack;
+	color: @jgsDropZoneText;
+	padding: 10px;
+	font-size: 18px;
+	border-radius: 5px;
+	text-align: center;
+	line-height: 50px;
+	border: solid 4px @jgsDropZoneBack;
+	cursor: pointer;
+	&:hover, &.ddhover {
+		background-color: darken(@jgsDropZoneBack, 12%);
+	}
+	.glyphicon {
+		font-size: 60px;
+	}
+	.subtext {
+		font-size: 12px;
+		color: @jgsDropZoneSubText;
+	}
+}
+
+// class for formatting uploaded images in  input forms
+.uploaded {
+	.img {
+		text-align: center;
+		margin-bottom: 10px;
+		margin-top	: 20px;
+		padding: 10px 0px;
+		img {
+			max-width: 200px;
+			padding-left: 24px;	// counter measure to remove width
+			margin: 0px auto;
+		}
+		canvas {
+			width: auto;
+			padding-left: 24px;	// counter measure to remove width
+			margin: 0px auto;
+		}
+		
+	
+		.remove {
+			cursor: pointer;
+			width: auto;
+			font-size: 24px;
+			color: red;
+			margin-right: 10px;
+		}
+	}
+}

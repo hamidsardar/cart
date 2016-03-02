@@ -1,0 +1,16 @@
+<tabset>
+	<tab ui-sref=".overview" ui-sref-active="active" >
+		<tab-heading>Status Overview</tab-heading>
+    </tab>
+    <tab ui-sref=".byProcessor" ui-sref-active="active">
+		<tab-heading>By Merchant</tab-heading>
+    </tab>
+    <tab ui-sref=".byMid" ui-sref-active="active">
+		<tab-heading>By MID</tab-heading>
+    </tab>
+    <div class="pull-right merchantSelect">
+    	<input ng-model="selectedMerchant" typeahead="merchant as merchant.name for merchant in merchants | filter:$viewValue" class="form-control" placeholder="Filter By Merchant" ng-click="showList()" typeahead-on-select='setMerchant($item, $model, $label)' />
+    </div>
+</tabset>
+
+<div style="margin-top: 20px;" ui-view="statusViews"></div>

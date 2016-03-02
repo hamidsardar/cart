@@ -1,0 +1,131 @@
+<div class="row cbFormRow">
+	<div class="col-md-8">
+		<h2 style="margin-top: 0px;">
+			Chargeback {{data.portal_data.CaseNumber}}
+		</h2>
+	</div>
+	<div class="col-md-4">
+		<div class="row step-circles" ng-if="data.status == 'New' || data.status == 'In-Progress'" data-spy="affix" data-offset-top="140">
+			<div class="col-xs-4" ui-sref-active="active" ui-sref=".card">
+				<span>1</span> Type
+			</div>
+			<div class="col-xs-4 disabled" ng-if="!data.type">
+				<span>2</span> Data
+			</div>
+			<div class="col-xs-4" ng-if="data.type" ui-sref-active="active" ui-sref=".data">
+				<span>2</span> Data
+			</div>
+			<div class="col-xs-4 disabled" ng-if="settings.disableReview">
+				<span>3</span> Review
+			</div>
+			<div class="col-xs-4" ng-if="!settings.disableReview" ui-sref-active="active" ui-sref=".review">
+				<span>3</span> Review
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	
+	<div class="col-md-4 col-md-push-8 form-sidebar">
+		
+		<div class="col-md-4 imported-col">
+			<div class="imported">
+				<div class="side-cbinfo-head">
+					<span ng-if="data.manual">SUMMARY</span>
+					<span ng-if="!data.manual">IMPORTED DATA</span>
+					
+				</div>
+				
+				<div class="side-cbinfo-desc">Data received regarding this <b>{{data.internal_type}}</b> case. Use this information to locate any missing data.</div>
+
+				<div class="row">
+					<div class="col-xs-4" style="text-align: right;">Status:</div>
+					<div class="col-xs-8 status-colors">
+						<span class="{{data.status}}">
+							{{data.status}} &nbsp;
+							<span ng-if="data.status == 'Sent'" class="glyphicon glyphicon-send"></span>
+							<span ng-if="data.status == 'In-Progress'" class="glyphicon glyphicon-circle-arrow-right"></span>
+							<span ng-if="data.status == 'Won'" class="glyphicon glyphicon-thumbs-up"></span> <a ng-if="data.status == 'Won'" ng-click="methods.undowonlost()"><span class="glyphicon glyphicon-remove-circle"></span></a>
+							<span ng-if="data.status == 'Accept'" class="glyphicon glyphicon-thumbs-down"></span> 
+							<span ng-if="data.status == 'Lost'" class="glyphicon glyphicon-thumbs-down"></span> <a ng-if="data.status == 'Lost'" ng-click="methods.undowonlost()"><span class="glyphicon glyphicon-remove-circle"></span></a>
+						</span>
+					</div>
+				</div>
+
+				<div class="row" ng-if="data.portal_data.MidNumber">
+					<div class="col-xs-4" style="text-align: right;">Type:</div>
+					<div class="col-xs-8">
+						<span ng-if="data.type == 'cp'">Card Present</span>
+						<span ng-if="data.type == 'cnp'">Card Not Present</span>		
+					</div>
+				</div>
+
+				<div class="row" ng-if="data.portal_data.MidNumber">
+					<div class="col-xs-4" style="text-align: right;">MID:</div>
+					<div class="col-xs-8">{{data.portal_data.MidNumber}}</div>
+				</div>
+
+				<div class="row" ng-if="data.gateway_data.FullName">
+					<div class="col-xs-4" style="text-align: right;">Customer:</div>
+					<div class="col-xs-8">{{data.gateway_data.FullName || ""}}</div>
+				</div>
+
+				<div class="row" ng-if="data.portal_data.MidNumber">
+					<div class="col-xs-4" style="text-align: right;">Amount:</div>
+					<div class="col-xs-8">{{data.portal_data.ChargebackAmt | isoCurrency:data.gateway_data.Currency}} {{data.gateway_data.Currency}}</div>
+				</div>
+
+				<div class="row" ng-if="data.portal_data.CcPrefix || data.portal_data.CcSuffix">
+					<div class="col-xs-4" style="text-align: right;">Credit Card:</div>
+					<div class="col-xs-8">
+						<span ng-if="data.portal_data.CcPrefix">{{data.portal_data.CcPrefix}}</span><span ng-if="!data.portal_data.CcPrefix">XXXX</span>-XXXX-XXXX-<span ng-if="data.portal_data.CcSuffix">{{data.portal_data.CcSuffix}}</span><span ng-if="!data.portal_data.CcSuffix">XXXX</span>
+						<span ng-if="data.gateway_data.CcType">({{data.gateway_data.CcType}})</span>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-4" style="text-align: right;">Shipped:</div>
+					<div class="col-xs-8">{{data.shipped}}</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-4" style="text-align: right;">Refunded:</div>
+					<div class="col-xs-8">{{data.refunded}}</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-4" style="text-align: right;">Recurring:</div>
+					<div class="col-xs-8">{{data.recurring}}</div>
+				</div>
+
+
+				<div class="row" ng-if="data.portal_data.ReasonCode || data.portal_data.ReasonText">
+					<div class="col-xs-4" style="text-align: right;">Reason:</div>
+					<div class="col-xs-8">{{data.portal_data.ReasonText}}</div>
+				</div>
+
+				<div class="row" ng-if="data.send_to.email">
+					<div class="col-xs-4" style="text-align: right;">Email To:</div>
+					<div class="col-xs-8">{{data.send_to.email}}</div>
+				</div>
+				<div class="row" ng-if="data.send_to.fax">
+					<div class="col-xs-4" style="text-align: right;">Fax To:</div>
+					<div class="col-xs-8">{{data.send_to.fax}}</div>
+				</div>
+			</div>
+			<div class="form-group btns" style="text-align: center; margin-top: 40px;" ng-if="settings.state.current.name == 'chargeback.review'">
+				<button type="button" class="btn btn-success" ng-if="data.status == 'In-Progress' || data.status == 'Errored'" style="margin-right: 20px;" ng-click="methods.submit('Are you sure you want to submit this chargeback dispute?\nBy submitting, you confirm that you have not included any full card numbers or CVV numbers.\nYou also certify that the provided information is true and accurate.', 'Yes, submit it!', 'No, keep working.')" class="btn btn-danger">Submit Chargeback Dispute</button>
+                                <button type="button" ng-if="data.docgen" ng-click="methods.download()" class="btn btn-info">Download Chargeback PDF</button>
+				<button type="button" ng-if="(data.status == 'Won' || data.status == 'Lost' || data.status == 'Sent') && !data.docgen" class="btn btn-default">PDF Document is Processing</button>
+			</div>
+			<div class="form-group btns" style="text-align: center; margin-top: 40px;" ng-if="settings.state.current.name == 'chargeback.review'">
+          <button type="button" class="btn btn-success" ng-if="data.status == 'In-Progress' || data.status == 'Errored'" style="margin-right: 20px;" ng-click="methods.accept('Are you sure you want to submit this chargeback dispute?\nBy submitting, you confirm that you have not included any full card numbers or CVV numbers.\nYou also certify that the provided information is true and accurate.', 'Yes, submit it!', 'No, keep working.')" class="btn btn-danger">Accept Chargeback</button>
+</div> 
+		</div>
+
+	</div>
+	<div class="col-md-8 col-md-pull-4">
+		<form name="cbForm" role="form" novalidate>
+			<div ui-view></div>
+		</form>
+	</div>
+</div>

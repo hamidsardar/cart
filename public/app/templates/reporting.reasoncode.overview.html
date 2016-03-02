@@ -1,0 +1,44 @@
+
+<div class="row ">
+	<div class="col-md-6">
+	</div>
+	<div class="col-md-6 dateRange">
+		<a href="#" datepicker-popup="MM/dd/yyyy" datepicker-options="dateOptions" ng-model="date.start.val" is-open="date.start.opened" ng-click="date.start.opened=true" isdate >{{date.start.val | date:'MMM dd, yyyy'}}</a> thru
+		<a href="#" datepicker-popup="MM/dd/yyyy" datepicker-options="dateOptions" ng-model="date.end.val" is-open="date.end.opened" ng-click="date.end.opened=true" isdate >{{date.end.val | date:'MMM dd, yyyy'}}</a>
+	</div>
+</div>
+
+	<br>
+	<br>
+	
+<div class="row">
+	<div class="col-md-8 col-md-offset-1">
+		<div class="btn-group">
+			<label class="btn" style="background-color: #E0A366;" ng-model="graphToggle" btn-radio ng-click="volume=true"> By Volume</label>
+			<label class="btn" style="background-color: #E0A366;" ng-model="graphToggle" btn-radio ng-click="volume=false"> By Count</label>
+		</div>
+		
+		<div class="dash-stat dash-darkblue" ng-show="volume">
+			<div class="stat-head stat-head-red">Reason Codes by Volume</div>
+				<div class="stat">
+					<div reason-bar control="graphBarReasons2"></div>
+				</div>	
+		</div>
+	</div>
+</div>
+
+<div class="row">	
+	<div class="col-md-8 col-md-offset-1" ng-hide="volume">
+		<div class="dash-stat dash-darkblue">
+			<div class="stat-head stat-head-red">Reason Codes by Count</div>
+				<div class="stat">
+					<div reason-bar control="graphBarReasons"></div>
+				</div>	
+			</div>
+		</div>
+	</div>	
+</div>		
+
+<div id="tooltip" style="opacity: 0;">
+    <div class="content"></div>
+</div>
