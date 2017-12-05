@@ -21,7 +21,7 @@
     "chrono-node": "1.0.2",
     "compression": "1.0.7",
     "connect": "2.19.6",
-    "ejs": "0.8.5",
+    "ejs": "2.5.5",
     "express": "4.4.3",
     "express-csv": "0.6.0",
     "express-device": "0.3.6",
